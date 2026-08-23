@@ -315,12 +315,12 @@ export const seoLandings: SeoLanding[] = [
   },
   {
     slug: "mereni-hluku-ceske-budejovice",
-    title: "Měření hluku České Budějovice",
+    title: "Měření hluku České Budějovice – provoz a KHS",
     metaDescription:
-      "Měření hluku v Českých Budějovicích pro provozy, pracoviště, kolaudace a řešení stížností. Laboratoř NATURCHEM na Rudolfovské ulici.",
+      "Měření hluku v Českých Budějovicích pro provozy, pracoviště, KHS a kolaudace. Laboratoř na Rudolfovské 119/57; navrhneme vhodný rozsah.",
     h1: "Měření hluku České Budějovice",
     intro:
-      "Potřebujete doložit hluk z provozu, na pracovišti nebo pro kolaudaci? NATURCHEM má laboratoř na Rudolfovské 119/57 v Českých Budějovicích a zajišťuje měření hluku i navazující akustické posouzení.",
+      "Potřebujete doložit hluk z provozu, na pracovišti nebo pro kolaudaci? Zvolíme vhodný režim měření a připravíme protokol podle účelu. Naše laboratoř je na Rudolfovské 119/57 v Českých Budějovicích.",
     sections: [
       {
         heading: "Kdy měření hluku využijete",
@@ -347,7 +347,46 @@ export const seoLandings: SeoLanding[] = [
     serviceHref: "/sluzby/mereni-hluku",
     contactService: "Měření hluku a akustika",
     areaServed: { type: "City", name: "České Budějovice" },
-    internalLinkPriority: 100
+    internalLinkPriority: 100,
+    layout: "demand",
+    eyebrow: "České Budějovice a jižní Čechy",
+    overviewHeading: "Co pro Vás změříme a doložíme",
+    highlights: ["Hluk z provozu", "Hluk na pracovišti", "Podklady pro KHS a kolaudaci"],
+    heroTheme: "mereni-hluku",
+    relatedLinks: [
+      {
+        href: "/sluzby/mereni-hluku",
+        label: "Měření hluku",
+        description: "Provozy, technologie, pracoviště a chráněné prostory."
+      },
+      {
+        href: "/sluzby/hlukove-studie",
+        label: "Hluková studie",
+        description: "Posouzení budoucího provozu, technologie nebo stavby."
+      },
+      {
+        href: "/mereni-pro-kolaudaci",
+        label: "Měření pro kolaudaci",
+        description: "Hluk, osvětlení a pracovní prostředí v jednom zadání."
+      }
+    ],
+    faq: [
+      {
+        question: "Jaké podklady mám poslat pro měření hluku?",
+        answer:
+          "Pošlete adresu provozu, popis zdrojů hluku a jejich provozní dobu. Pomůže také situace, fotografie nebo požadavek KHS či stavebního úřadu."
+      },
+      {
+        question: "Měříte hluk z provozu i hluk na pracovišti?",
+        answer:
+          "Ano. Účel, místo a režim měření se liší, proto nejprve upřesníme, zda potřebujete doložit vliv provozu na okolí, expozici zaměstnanců nebo podklad pro kolaudaci."
+      },
+      {
+        question: "Lze měření použít při řešení stížnosti na hluk?",
+        answer:
+          "Rozsah navrhneme podle zdroje hluku, denní či noční doby a chráněného prostoru. Před měřením potřebujeme znát konkrétní situaci a účel výstupu."
+      }
+    ]
   },
   {
     slug: "podklady-pro-cizp",
