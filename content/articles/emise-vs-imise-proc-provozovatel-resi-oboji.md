@@ -1,15 +1,17 @@
 ---
-title: 'Emise a imise: jaký je mezi nimi rozdíl?'
+title: 'Emise a imise: rozdíl, měření a limity'
 slug: emise-vs-imise-proc-provozovatel-resi-oboji
-excerpt: 'Jaký je rozdíl mezi emisemi a imisemi? Vysvětlujeme měření na zdroji, imisní dopad v okolí a kdy je potřeba rozptylová studie.'
+excerpt: 'Emise označují vypouštění znečišťujících látek ze zdroje; imise jejich koncentraci v okolním ovzduší. Přehled měření, limitů a rozptylových studií.'
 author: Ing. František Hezina
 publishedAt: "2026-05-03"
-updatedAt: "2026-08-12"
+updatedAt: "2026-08-23"
 topic: Emise
 ---
 ## Proč je rozdíl mezi emisemi a imisemi důležitý
 
-V praxi se často zaměňuje, co znamená „měření emisí“ a co znamená „imisní dopad“. Provozovatel může mít pocit, že když technologie splňuje emisní limit na výduchu, je z hlediska ovzduší vše vyřešeno. Tak jednoduché to ale není.
+Rozdíl je v místě hodnocení: **emise** se vztahují ke zdroji, zatímco **imise** ke koncentraci znečišťujících látek v okolním ovzduší. [Měření emisí](/sluzby/mereni-emisi) ověřuje skutečný stav na výduchu; [rozptylová studie](/sluzby/rozptylove-studie) výpočtem posuzuje dopad zdroje v území.
+
+Provozovatel může mít pocit, že když technologie splňuje emisní limit na výduchu, je z hlediska ovzduší vše vyřešeno. Tak jednoduché to ale není.
 
 **Emise** jsou znečišťující látky vypouštěné ze zdroje do ovzduší. Typicky jde o koncentraci nebo hmotnostní tok z výduchu, filtru, kotle, lakovny, svařovny, drtiče, dieselagregátu nebo jiné technologie.
 
