@@ -1,5 +1,5 @@
 ﻿/** 301 přesměrování ze starých URL na finální strukturu. */
-export const permanentRedirects = [
+const redirectRules: { source: string; destination: string; permanent: true }[] = [
   // --- Starý web Forpsi (2026) → homepage. Doplň podle GSC → Stránky → Nenalezeno (404). ---
   { source: "/kariera", destination: "/", permanent: true },
   { source: "/kariera/", destination: "/", permanent: true },
@@ -88,13 +88,13 @@ export const permanentRedirects = [
   { source: "/obory/:path*", destination: "/provozy-a-technologie/:path*", permanent: true },
   {
     source:
-      "/poradna/novela-zákona-o-ochraně-ovzduší-2025-co-se-mění-pro-provozovatele-zdrojů-emisí",
+      "/poradna/novela-z%C3%A1kona-o-ochran%C4%9B-ovzdu%C5%A1%C3%AD-2025-co-se-m%C4%9Bn%C3%AD-pro-provozovatele-zdroj%C5%AF-emis%C3%AD",
     destination: "/poradna/novela-zakona-o-ochrane-ovzdusi-2025",
     permanent: true
   },
   {
     source:
-      "/poradna/novela-zákona-o-ochraně-ovzduší-2025-co-se-mění-pro-provozovatele-zdrojů-emisí/",
+      "/poradna/novela-z%C3%A1kona-o-ochran%C4%9B-ovzdu%C5%A1%C3%AD-2025-co-se-m%C4%9Bn%C3%AD-pro-provozovatele-zdroj%C5%AF-emis%C3%AD/",
     destination: "/poradna/novela-zakona-o-ochrane-ovzdusi-2025",
     permanent: true
   },
@@ -197,3 +197,17 @@ export const permanentRedirects = [
   { source: "/de/prodej/senseca/", destination: "/de/prodej/pcf-elettronica/", permanent: true },
   { source: "/de/prodej/senseca/:path*", destination: "/de/prodej/pcf-elettronica/", permanent: true }
 ];
+
+function canonicalDestination(destination: string): string {
+  if (destination === "/" || destination.endsWith("/")) return destination;
+  return `${destination}/`;
+}
+
+/**
+ * `trailingSlash: true` jinak přidá za historický redirect další 308 skok.
+ * Cíle proto už v redirect pravidle míří přímo na finální kanonickou URL.
+ */
+export const permanentRedirects = redirectRules.map((redirect) => ({
+  ...redirect,
+  destination: canonicalDestination(redirect.destination)
+}));
