@@ -23,7 +23,7 @@ export function OutboundLinkTelemetry() {
   useEffect(() => {
     if (!gaId || !consent.statistics || !consent.updatedAt) return;
 
-    function onPointerDown(event: Event) {
+    function onClick(event: MouseEvent) {
       if (!(event.target instanceof Element)) return;
       const a = event.target.closest("a[href]");
       if (!(a instanceof HTMLAnchorElement)) return;
@@ -46,8 +46,8 @@ export function OutboundLinkTelemetry() {
       }
     }
 
-    document.addEventListener("pointerdown", onPointerDown, true);
-    return () => document.removeEventListener("pointerdown", onPointerDown, true);
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
   }, [consent.statistics, consent.updatedAt]);
 
   return null;
