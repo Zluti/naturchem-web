@@ -5,24 +5,21 @@ export const homeHeroPillars: HomeHeroPillar[] = [
     id: "mereni",
     label: "Messungen",
     theme: "homepage-mereni",
-    detail:
-      "Wir messen Emissionen, Lärm, Beleuchtung, Schwingungen, Mikroklima und weitere Arbeitsplatzfaktoren — für Betrieb, KHS, ČIŽP oder Bauabnahme.",
+    detail: "Emissionen, Lärm und Arbeitsplatzfaktoren für Betrieb, Behörden oder Bauabnahme.",
     href: "/sluzby#mericke-sluzby"
   },
   {
     id: "studie",
     label: "Studien",
     theme: "homepage-studie",
-    detail:
-      "Wir erstellen Ausbreitungs- und Lärmstudien, Gutachten und Berechnungen für die Baugenehmigung, KHS oder UVP.",
+    detail: "Ausbreitungs- und Lärmstudien für Projekte, Genehmigungen oder UVP.",
     href: "/sluzby#studie-vypocty"
   },
   {
     id: "dokumentace",
     label: "Dokumentation",
     theme: "homepage-eia",
-    detail:
-      "Wir erstellen UVP-Dokumentation, Gutachten, Betriebsregeln, IPPC und ISPOP – unterstützende Materialien für Behörden.",
+    detail: "UVP, Gutachten, Betriebsregeln, IPPC und ISPOP für Verwaltungsverfahren.",
     href: "/sluzby#povolovaci-podklady"
   }
 ];

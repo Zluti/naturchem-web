@@ -50,8 +50,7 @@ const offerPillars = {
     {
       icon: "pillar-mereni" as const,
       title: "Akreditovaná měření",
-      teaser:
-        "Emise, hluk, osvětlení, vibrace, mikroklima i další měření pracovního prostředí — pro provoz, KHS, ČIŽP nebo kolaudaci…",
+      teaser: "Emise, hluk a pracovní prostředí pro provoz a kolaudaci.",
       text: "Změříme emise, hluk, osvětlení, vibrace a mikroklima. U nové haly nebo kolaudace připravíme společný rozsah podle projektu a provozu.",
       cta: "Zobrazit měření",
       href: "/sluzby#mericke-sluzby",
@@ -65,7 +64,7 @@ const offerPillars = {
     {
       icon: "pillar-studie" as const,
       title: "Studie a odborné výpočty",
-      teaser: "Rozptylové a hlukové studie, posudky a výpočty pro řízení, KHS nebo EIA…",
+      teaser: "Rozptylové a hlukové studie pro povolení nebo EIA.",
       text: "Připravíme rozptylové a hlukové studie, akustické posudky a modelové výpočty pro KHS, stavební řízení nebo EIA.",
       cta: "Zobrazit studie",
       href: "/sluzby#studie-vypocty",
@@ -79,7 +78,7 @@ const offerPillars = {
     {
       icon: "pillar-dokumentace" as const,
       title: "Dokumentace a EIA",
-      teaser: "EIA, posudky, provozní řády, IPPC a ISPOP — podklady pro úřady a povolení…",
+      teaser: "EIA, posudky a dokumentace pro úřady a povolení.",
       text: "Zpracujeme EIA, odborné posudky, provozní řády, IPPC, ISPOP, GHG i další dokumentaci pro správní orgány.",
       cta: "Zobrazit dokumentaci",
       href: "/sluzby#povolovaci-podklady",
@@ -87,7 +86,7 @@ const offerPillars = {
       links: [
         { label: "EIA a posudky", href: "/sluzby/eia-posudky-poradenstvi" },
         { label: "IPPC / ISPOP / GHG", href: "/sluzby/ippc-integrovana-povoleni" },
-        { label: "Kontakt", href: "/kontakt" }
+        { label: "Oznámení záměru EIA", href: "/sluzby/eia-oznameni-zameru" }
       ]
     }
   ],
@@ -95,8 +94,7 @@ const offerPillars = {
     {
       icon: "pillar-mereni" as const,
       title: "Accredited measurements",
-      teaser:
-        "Emissions, noise, lighting, vibration, microclimate and other workplace measurements — for operations, KHS, ČIŽP or building approval…",
+      teaser: "Emissions, noise and workplace measurements for operations and building approval.",
       text: "We measure emissions, noise, lighting, vibration and microclimate. For a new hall or building approval, we define one coordinated scope based on the project and operation.",
       cta: "View measurements",
       href: "/sluzby#mericke-sluzby",
@@ -110,7 +108,7 @@ const offerPillars = {
     {
       icon: "pillar-studie" as const,
       title: "Studies and expert calculations",
-      teaser: "Dispersion and noise studies, reports and calculations for permitting, KHS or EIA…",
+      teaser: "Dispersion and noise studies for permits or EIA.",
       text: "We prepare dispersion and noise studies, acoustic reports and model calculations for KHS, building permitting or EIA.",
       cta: "View studies",
       href: "/sluzby#studie-vypocty",
@@ -124,7 +122,7 @@ const offerPillars = {
     {
       icon: "pillar-dokumentace" as const,
       title: "Documentation and EIA",
-      teaser: "EIA, expert reports, operating rules, IPPC and ISPOP — documents for authorities and permits…",
+      teaser: "EIA, expert reports and documentation for authorities and permits.",
       text: "We prepare EIA, expert reports, operating rules, IPPC, ISPOP, GHG and other documentation for administrative bodies.",
       cta: "View documentation",
       href: "/sluzby#povolovaci-podklady",
@@ -132,7 +130,7 @@ const offerPillars = {
       links: [
         { label: "EIA and expert reports", href: "/sluzby/eia-posudky-poradenstvi" },
         { label: "IPPC / ISPOP / GHG", href: "/sluzby/ippc-integrovana-povoleni" },
-        { label: "Contact", href: "/kontakt" }
+        { label: "EIA project notification", href: "/sluzby/eia-oznameni-zameru" }
       ]
     }
   ],
@@ -140,8 +138,7 @@ const offerPillars = {
     {
       icon: "pillar-mereni" as const,
       title: "Akkreditierte Messungen",
-      teaser:
-        "Emissionen, Lärm, Beleuchtung, Schwingungen, Mikroklima und weitere Arbeitsplatzmessungen — für Betrieb, KHS, ČIŽP oder Bauabnahme…",
+      teaser: "Emissionen, Lärm und Arbeitsplatzmessungen für Betrieb und Bauabnahme.",
       text: "Wir messen Emissionen, Lärm, Beleuchtung, Schwingungen und Mikroklima. Bei einer neuen Halle oder Bauabnahme stimmen wir den gemeinsamen Umfang auf Projekt und Betrieb ab.",
       cta: "Messungen anzeigen",
       href: "/sluzby#mericke-sluzby",
@@ -155,7 +152,7 @@ const offerPillars = {
     {
       icon: "pillar-studie" as const,
       title: "Studien und Fachberechnungen",
-      teaser: "Ausbreitungs- und Lärmstudien, Gutachten und Berechnungen für Genehmigungen, KHS oder EIA…",
+      teaser: "Ausbreitungs- und Lärmstudien für Genehmigungen oder UVP.",
       text: "Wir erstellen Ausbreitungs- und Lärmstudien, akustische Gutachten und Modellberechnungen für KHS, Baugenehmigungen oder EIA.",
       cta: "Studien anzeigen",
       href: "/sluzby#studie-vypocty",
@@ -169,7 +166,7 @@ const offerPillars = {
     {
       icon: "pillar-dokumentace" as const,
       title: "Dokumentation und EIA",
-      teaser: "EIA, Gutachten, Betriebsanweisungen, IPPC und ISPOP — Unterlagen für Behörden und Genehmigungen…",
+      teaser: "UVP, Gutachten und Dokumentation für Behörden und Genehmigungen.",
       text: "Wir erstellen EIA, Gutachten, Betriebsanweisungen, IPPC, ISPOP, THG und weitere Dokumentation für Verwaltungsbehörden.",
       cta: "Dokumentation anzeigen",
       href: "/sluzby#povolovaci-podklady",
@@ -177,7 +174,7 @@ const offerPillars = {
       links: [
         { label: "EIA und Gutachten", href: "/sluzby/eia-posudky-poradenstvi" },
         { label: "IPPC / ISPOP / THG", href: "/sluzby/ippc-integrovana-povoleni" },
-        { label: "Kontakt", href: "/kontakt" }
+        { label: "EIA-Projektanzeige", href: "/sluzby/eia-oznameni-zameru" }
       ]
     }
   ]

@@ -1,12 +1,15 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { buildWhatsAppUrl, isWhatsAppEnabled } from "@/lib/live-chat";
 import { useTranslations } from "@/lib/i18n/locale-context";
 
 export function WhatsAppButton() {
   const t = useTranslations("common");
+  const pathname = usePathname();
+  const isHomepage = pathname === "/" || /^\/(en|de)\/?$/.test(pathname);
 
-  if (!isWhatsAppEnabled()) return null;
+  if (!isWhatsAppEnabled() || isHomepage) return null;
 
   return (
     <a

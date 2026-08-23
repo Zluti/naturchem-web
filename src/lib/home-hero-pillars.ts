@@ -16,24 +16,21 @@ export const homeHeroPillars: HomeHeroPillar[] = [
     id: "mereni",
     label: "Měření",
     theme: "homepage-mereni",
-    detail:
-      "Změříme emise, hluk, osvětlení, vibrace, mikroklima i další faktory pracovního prostředí — pro provoz, KHS, ČIŽP nebo kolaudaci.",
+    detail: "Emise, hluk a pracovní prostředí pro provoz, KHS, ČIŽP nebo kolaudaci.",
     href: "/sluzby#mericke-sluzby"
   },
   {
     id: "studie",
     label: "Studie",
     theme: "homepage-studie",
-    detail:
-      "Připravíme rozptylové a hlukové studie, posudky a výpočty pro stavební řízení, KHS nebo EIA.",
+    detail: "Rozptylové a hlukové studie pro projekt, povolení nebo EIA.",
     href: "/sluzby#studie-vypocty"
   },
   {
     id: "dokumentace",
     label: "Dokumentace",
     theme: "homepage-eia",
-    detail:
-      "Zpracujeme EIA, odborné posudky, provozní řády, IPPC a ISPOP — podklady pro správní orgány.",
+    detail: "EIA, posudky, provozní řády, IPPC a ISPOP pro správní řízení.",
     href: "/sluzby#povolovaci-podklady"
   }
 ];

@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/Schema";
 import { ClientLogosGrid } from "@/components/ClientLogosGrid";
 import { HomePoradnaStrip } from "@/components/HomePoradnaStrip";
 import { HomeDemandPaths } from "@/components/HomeDemandPaths";
+import { HomeTechnicalMotif } from "@/components/HomeTechnicalMotif";
 import { getCompanyStatsContent } from "@/lib/i18n/company-stats-i18n";
 import { getHomeHeroPillars } from "@/lib/i18n/content";
 import { getMessages } from "@/lib/i18n/get-messages";
@@ -94,6 +95,7 @@ export default async function Home({ params }: Props) {
         className="home-section home-section-offer home-fade-in-section home-fade-in-section-delay-2 home-below-fold"
         aria-labelledby="home-offer-heading"
       >
+        <HomeTechnicalMotif />
         <div className="container">
           <header className="section-header home-offer-header">
             <h2 id="home-offer-heading">{messages.home.offerTitle}</h2>

@@ -5,24 +5,21 @@ export const homeHeroPillars: HomeHeroPillar[] = [
     id: "mereni",
     label: "Measurements",
     theme: "homepage-mereni",
-    detail:
-      "We measure emissions, noise, lighting, vibration, microclimate and other workplace factors — for operations, KHS, ČIŽP or building approval.",
+    detail: "Emissions, noise and workplace conditions for operations, authorities or building approval.",
     href: "/sluzby#mericke-sluzby"
   },
   {
     id: "studie",
     label: "Studies",
     theme: "homepage-studie",
-    detail:
-      "We prepare dispersion and noise studies, expert reports and calculations for building permitting, KHS or EIA.",
+    detail: "Dispersion and noise studies for projects, permits or EIA.",
     href: "/sluzby#studie-vypocty"
   },
   {
     id: "dokumentace",
     label: "Documentation",
     theme: "homepage-eia",
-    detail:
-      "We prepare EIA documentation, expert reports, operating rules, IPPC and ISPOP — supporting materials for authorities.",
+    detail: "EIA, expert reports, operating rules, IPPC and ISPOP for administrative proceedings.",
     href: "/sluzby#povolovaci-podklady"
   }
 ];

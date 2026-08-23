@@ -2,6 +2,7 @@
 
 import Script from "next/script";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useCookieConsentState } from "@/components/CookieConsentBanner";
 import { getTawkConfig } from "@/lib/live-chat";
 
@@ -25,8 +26,10 @@ export function TawkToChat() {
   const consent = useCookieConsentState();
   const tawk = getTawkConfig();
   const isMobile = useIsMobileViewport();
+  const pathname = usePathname();
+  const isHomepage = pathname === "/" || /^\/(en|de)\/?$/.test(pathname);
 
-  if (!tawk || !consent.updatedAt || !consent.marketing || isMobile) return null;
+  if (!tawk || !consent.updatedAt || !consent.marketing || isMobile || isHomepage) return null;
 
   return (
     <Script id="tawk-to-live-chat" strategy="lazyOnload">
