@@ -34,6 +34,7 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 31536000
   },
   experimental: {
+    globalNotFound: true,
     optimizePackageImports: ["react-markdown"]
   },
   async headers() {

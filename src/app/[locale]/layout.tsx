@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { Source_Sans_3 } from "next/font/google";
 import { notFound } from "next/navigation";
 import { DeferredClientWidgets } from "@/components/DeferredClientWidgets";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
-import { HtmlLang } from "@/components/HtmlLang";
+import { GoogleConsentModeInit } from "@/components/GoogleConsentModeInit";
 import { OutboundLinkTelemetry } from "@/components/OutboundLinkTelemetry";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/Header";
@@ -20,6 +21,14 @@ import { pickClientMessages } from "@/lib/i18n/client-messages";
 import { getMessages } from "@/lib/i18n/get-messages";
 import { LocaleProvider } from "@/lib/i18n/locale-context";
 import { isLocale, locales, type Locale } from "@/lib/i18n/locales";
+import "../globals.css";
+
+const fontSans = Source_Sans_3({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-sans",
+  weight: ["400", "600", "700"],
+  display: "swap"
+});
 
 type Props = {
   children: React.ReactNode;
@@ -83,27 +92,58 @@ export default async function LocaleLayout({ children, params }: Props) {
   const websiteData = buildWebSiteJsonLd(locale);
 
   return (
-    <LocaleProvider locale={locale} messages={pickClientMessages(messages)}>
-      {/* Set <html lang> before paint without making the root layout dynamic. */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `document.documentElement.lang=${JSON.stringify(locale)};`
-        }}
-      />
-      <HtmlLang locale={locale} />
-      <JsonLd data={websiteData} />
-      <JsonLd data={orgData} />
-      <JsonLd data={localBusinessData} />
-      <SkipToContent locale={locale} />
-      <Header locale={locale} />
-      <div id="page-content" tabIndex={-1}>
-        {children}
-      </div>
-      <Footer locale={locale} />
-      <CookieConsentBanner />
-      <DeferredClientWidgets />
-      <OutboundLinkTelemetry />
-      <SpeedInsights />
-    </LocaleProvider>
+    <html lang={locale} className={fontSans.variable} suppressHydrationWarning>
+      <head>
+        <GoogleConsentModeInit />
+        <link
+          rel="alternate"
+          type="text/plain"
+          href={`${siteUrl}/llms.txt`}
+          title="NATURCHEM — summary for AI assistants"
+        />
+        <link
+          rel="alternate"
+          type="text/plain"
+          href={`${siteUrl}/llms-full.txt`}
+          title="NATURCHEM — extended summary for AI assistants"
+        />
+        <link
+          rel="alternate"
+          type="text/plain"
+          href={`${siteUrl}/llms-en.txt`}
+          title="NATURCHEM — summary for AI assistants (English)"
+        />
+        <link
+          rel="alternate"
+          type="text/plain"
+          href={`${siteUrl}/llms-de.txt`}
+          title="NATURCHEM — summary for AI assistants (German)"
+        />
+        <link rel="help" type="text/plain" href={`${siteUrl}/ai.txt`} title="NATURCHEM — AI discovery" />
+        <link
+          rel="alternate"
+          type="text/plain"
+          href={`${siteUrl}/llms-articles.txt`}
+          title="NATURCHEM — article index for AI assistants"
+        />
+      </head>
+      <body className={fontSans.className} suppressHydrationWarning>
+        <LocaleProvider locale={locale} messages={pickClientMessages(messages)}>
+          <JsonLd data={websiteData} />
+          <JsonLd data={orgData} />
+          <JsonLd data={localBusinessData} />
+          <SkipToContent locale={locale} />
+          <Header locale={locale} />
+          <div id="page-content" tabIndex={-1}>
+            {children}
+          </div>
+          <Footer locale={locale} />
+          <CookieConsentBanner />
+          <DeferredClientWidgets />
+          <OutboundLinkTelemetry />
+          <SpeedInsights />
+        </LocaleProvider>
+      </body>
+    </html>
   );
 }
