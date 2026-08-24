@@ -189,4 +189,4 @@ Odborný posudek podle zákona o ochraně ovzduší je důležitý podklad zejm�
 
 Rozptylová studie hodnotí dopad emisí v okolí, zatímco odborný posudek se soustředí hlavně na samotný zdroj, jeho zařazení, provozní podmínky a emisní požadavky. V řadě případů mohou být oba podklady potřeba současně.
 
-**Zpracujeme odborný posudek pro krajský úřad. Pošlete nám projektovou dokumentaci, požadavek úřadu nebo povolení provozu a ověříme, jaké podklady budou pro váš zdroj potřeba.**
+**Zpracujeme [odborný posudek pro krajský úřad](/sluzby/odborne-posudky/). Pošlete nám projektovou dokumentaci, požadavek úřadu nebo povolení provozu a ověříme, jaké podklady budou pro váš zdroj potřeba.**
