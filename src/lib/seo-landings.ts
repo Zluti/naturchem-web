@@ -123,23 +123,74 @@ export const seoLandings: SeoLanding[] = [
   },
   {
     slug: "mereni-hluku-tepelneho-cerpadla-vzt",
-    title: "Měření hluku tepelných čerpadel a VZT",
+    title: "Měření hluku tepelného čerpadla a VZT",
     metaDescription:
-      "Měření hluku venkovních jednotek tepelných čerpadel, VZT a chlazení. Protokoly a studie pro kolaudaci a úřady.",
-    h1: "Měření hluku tepelných čerpadel a VZT",
+      "Měření hluku tepelného čerpadla, VZT a chlazení. Protokol pro kolaudaci, stavební řízení nebo řešení stížností okolí.",
+    h1: "Měření hluku tepelného čerpadla a VZT",
     intro:
-      "Měříme hluk venkovních jednotek tepelných čerpadel, VZT, chladičů a pomocných technologií. Výstupy slouží pro kolaudaci, stavební řízení i řešení stížností okolí.",
+      "Ověříme hluk instalovaného tepelného čerpadla, VZT nebo chlazení. Výsledek použijete pro kolaudaci, stavební řízení nebo řešení stížnosti.",
     sections: [
       {
+        heading: "Kdy potřebujete měření",
         paragraphs: [
-          "Posoudíme umístění zdroje, provozní režim a možná protihluková opatření.",
-          "V návaznosti zpracujeme hlukovou studii nebo stavebně-akustické posouzení."
+          "Po instalaci zařízení, při kolaudaci, po stížnosti okolí nebo při ověření účinnosti protihlukového opatření."
+        ]
+      },
+      {
+        heading: "Co nám pošlete",
+        paragraphs: [
+          "Umístění jednotky, technický list, provozní režimy a požadavek úřadu nebo popis stížnosti. Podle podkladů navrhneme rozsah měření."
+        ]
+      },
+      {
+        heading: "Jaký dostanete výstup",
+        paragraphs: [
+          "Protokol z měření skutečného provozu. Pokud zařízení ještě není instalované, doporučíme místo měření hlukovou studii."
         ]
       }
     ],
     serviceHref: "/sluzby/mereni-hluku",
     contactService: "Měření hluku a akustika",
-    oboryHref: "/provozy-a-technologie/tepelna-cerpadla-vzt"
+    oboryHref: "/provozy-a-technologie/tepelna-cerpadla-vzt",
+    layout: "demand",
+    eyebrow: "Tepelná čerpadla, VZT a chlazení",
+    overviewHeading: "Co potřebujeme pro měření",
+    highlights: ["Měření skutečného provozu", "Kolaudace a stavební řízení", "Ověření po protihlukové úpravě"],
+    heroTheme: "mereni-hluku",
+    relatedLinks: [
+      {
+        href: "/sluzby/mereni-hluku",
+        label: "Měření hluku a akustika",
+        description: "Přehled měření hluku pro provozy, stavby a pracovní prostředí."
+      },
+      {
+        href: "/provozy-a-technologie/tepelna-cerpadla-vzt",
+        label: "Hluková studie pro tepelné čerpadlo a VZT",
+        description: "Výpočet hluku před instalací zařízení nebo při změně projektu."
+      },
+      {
+        href: "/sluzby/hlukove-studie",
+        label: "Hlukové studie",
+        description: "Výpočtové posouzení technologií, areálů a dopravy."
+      }
+    ],
+    faq: [
+      {
+        question: "Potřebuji měření hluku, nebo hlukovou studii?",
+        answer:
+          "Měření ověří skutečný hluk již instalovaného zařízení. Hluková studie předem posoudí očekávaný dopad a umožní porovnat umístění nebo provozní varianty."
+      },
+      {
+        question: "Jak získám cenu měření hluku tepelného čerpadla?",
+        answer:
+          "Pošlete umístění jednotky, technický list, provozní režimy a účel měření. Z těchto podkladů určíme rozsah a připravíme konkrétní nabídku."
+      },
+      {
+        question: "Měříte také hluk VZT a chlazení?",
+        answer:
+          "Ano. Měříme také venkovní jednotky VZT, chladiče, ventilátory a související technologie v jejich skutečném provozu."
+      }
+    ]
   },
   {
     slug: "mereni-pracovniho-prostredi-kategorizace-praci",
