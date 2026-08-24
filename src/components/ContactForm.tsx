@@ -44,6 +44,7 @@ export function ContactForm({
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const isHoneypotSubmission = Boolean(String(formData.get("website") ?? "").trim());
     const email = String(formData.get("email") ?? "").trim();
     const phone = String(formData.get("phone") ?? "").trim();
 
@@ -81,14 +82,16 @@ export function ContactForm({
       const deadlineProvided = Boolean(String(formData.get("deadline") ?? "").trim());
       form.reset();
       setSelectedServices([]);
-      sendGtagEvent("generate_lead", {
-        form_id: "poptavkovy-formular",
-        inquiry_category: categoryForEvent,
-        service_interest: servicesForEvent.join(" | ") || categoryForEvent,
-        service_count: servicesForEvent.length,
-        lead_has_location: locationProvided,
-        lead_has_deadline: deadlineProvided
-      });
+      if (!isHoneypotSubmission) {
+        sendGtagEvent("generate_lead", {
+          form_id: "poptavkovy-formular",
+          inquiry_category: categoryForEvent,
+          service_interest: servicesForEvent.join(" | ") || categoryForEvent,
+          service_count: servicesForEvent.length,
+          lead_has_location: locationProvided,
+          lead_has_deadline: deadlineProvided
+        });
+      }
     } catch {
       setStatus("error");
       setFeedback(sendFailureMessage);
