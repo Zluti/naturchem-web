@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import { useCookieConsentState } from "@/components/CookieConsentBanner";
 import { sendGtagEvent } from "@/lib/gtag";
+import { getInquiryCtaParams } from "@/lib/inquiry-cta-analytics";
 
 const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
@@ -34,6 +35,12 @@ export function OutboundLinkTelemetry() {
         link_text: linkText(a),
         page_path: window.location.pathname
       };
+      const inquiryParams = getInquiryCtaParams(href, window.location.href);
+
+      // Čistý krok do poptávkové cesty. Původní click_cta zůstává kvůli historické návaznosti.
+      if (inquiryParams) {
+        sendGtagEvent("click_inquiry_cta", { ...params, ...inquiryParams });
+      }
 
       if (href.startsWith("mailto:")) {
         sendGtagEvent("click_email", params);
