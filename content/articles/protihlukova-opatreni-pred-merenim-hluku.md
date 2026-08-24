@@ -114,7 +114,8 @@ Pro úvodní posouzení nám můžete zaslat:
 
 Prověříme pravděpodobné zdroje a cesty šíření hluku, navrhneme postup diagnostiky a posoudíme vhodnost uvažovaných opatření. Pomůžeme stanovit, co upravit před dalším měřením a jaké provozní podmínky při ověřování zachytit.
 
-Přehled souvisejících činností najdete na stránce [Služby NATURCHEM](https://www.naturchem.cz/sluzby).
+Navazující diagnostiku, kontrolní měření a protokol pro úřad zajišťujeme v rámci
+služby [měření hluku a akustika](/sluzby/mereni-hluku/).
 
 ## Související právní předpisy
 
