@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Buffer } from "node:buffer";
+import { randomUUID } from "node:crypto";
 import { Resend } from "resend";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import {
@@ -227,8 +228,10 @@ export async function POST(request: Request) {
       );
     }
 
+    const leadId = randomUUID();
     const emailBody = [
       `Nová poptávka z webu NATURCHEM`,
+      `ID poptávky: ${leadId}`,
       ``,
       `Jméno a firma: ${name}`,
       `E-mail: ${email || "neuvedeno"}`,
@@ -349,7 +352,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       ok: true,
-      message: msg.success
+      message: msg.success,
+      leadId
     });
   } catch (error) {
     console.error("[CONTACT_FORM_ERROR]", error);

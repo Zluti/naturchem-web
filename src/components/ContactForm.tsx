@@ -66,7 +66,11 @@ export function ContactForm({
         headers: { "Accept-Language": locale },
         body: formData
       });
-      const result = (await response.json()) as { ok: boolean; message: string };
+      const result = (await response.json()) as {
+        ok: boolean;
+        message: string;
+        leadId?: string;
+      };
 
       if (!response.ok || !result.ok) {
         setStatus("error");
@@ -89,7 +93,8 @@ export function ContactForm({
           service_interest: servicesForEvent.join(" | ") || categoryForEvent,
           service_count: servicesForEvent.length,
           lead_has_location: locationProvided,
-          lead_has_deadline: deadlineProvided
+          lead_has_deadline: deadlineProvided,
+          lead_id: result.leadId
         });
       }
     } catch {
