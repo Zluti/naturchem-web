@@ -168,4 +168,4 @@ U vibrací na pracovišti je nejdříve nutné správně rozlišit, zda se jedn�
 
 Pokud si nejste jisti, zda u vás řešit vibrace ručního nářadí, vibrace VZV, celkové vibrace nebo kombinaci více činností, pošlete nám seznam strojů, nářadí, pracovních postupů a orientační doby práce. Navrhneme vhodný rozsah měření vibrací pro pracovní prostředí a kategorizaci prací.
 
-[Pracovní prostředí – měření a kategorizace prací](https://www.naturchem.cz/sluzby/pracovni-prostredi)
+[Měření vibrací na pracovišti – služba a podklady k poptávce](https://www.naturchem.cz/sluzby/mereni-vibraci/)
