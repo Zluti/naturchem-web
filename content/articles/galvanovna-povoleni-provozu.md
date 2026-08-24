@@ -38,7 +38,7 @@ V povolení se stanovuje zejména zařazení zdroje, povolená kapacita, emisní
 
 Při přípravě nové galvanické linky nebo významné změně stávající galvanovny se obvykle zpracovává také **odborný posudek autorizované osoby**. Rozptylová studie není pro samotný kód 4.12 podle označení v příloze č. 2 zákona automaticky vyžadována. V konkrétní provozovně však mohou být další zdroje, pro které tato povinnost vznikne.
 
-Podrobnosti k žádosti uvádíme také v článku [Povolení provozu stacionárního zdroje: jaké přílohy připravit k žádosti](/poradna/povoleni-provozu-stacionarniho-zdroje).
+Orientační ceny žádosti a souvisejících podkladů uvádíme v článku [Kolik stojí odborný posudek, rozptylová studie, provozní řád a povolení provozu](/poradna/cena-odborneho-posudku-ovzdusi-rozptylove-studie-provozniho-radu).
 
 ## Jaké emisní limity platí do 30 m³
 
