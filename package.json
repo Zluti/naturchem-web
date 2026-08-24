@@ -14,6 +14,7 @@
     "verify": "npm run lint && npm run typecheck && npm run build",
     "seo:smoke-sitemap": "python scripts/smoke_test_urls.py https://www.naturchem.cz",
     "seo:smoke-local": "python scripts/smoke_test_urls.py http://localhost:3000",
+    "seo:smoke-routing-local": "python scripts/smoke_test_routing.py http://localhost:3000",
     "seo:gsc-report": "python scripts/gsc_monthly_report.py",
     "seo:gsc-404-import": "python scripts/gsc_import_404_redirects.py"
   },

@@ -3,6 +3,24 @@ import { permanentRedirects } from "./src/lib/redirects";
 
 const LONG_CACHE = "public, max-age=31536000, immutable";
 
+/**
+ * Czech pages are public without a locale prefix. Keep locale routing in the
+ * platform router so ordinary page views do not invoke a Vercel Function.
+ */
+const defaultLocaleRedirects = [
+  { source: "/cs", destination: "/", permanent: true },
+  { source: "/cs/:path*", destination: "/:path*/", permanent: true }
+];
+
+const defaultLocaleRewrites = [
+  { source: "/", destination: "/cs" },
+  {
+    source:
+      "/:path((?!api(?:/|$)|_next(?:/|$)|_vercel(?:/|$)|admin(?:/|$)|cs(?:/|$)|en(?:/|$)|de(?:/|$)|.*\\..*$).*)",
+    destination: "/cs/:path"
+  }
+];
+
 const securityHeaders = [
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -75,7 +93,14 @@ const nextConfig: NextConfig = {
     ];
   },
   async redirects() {
-    return permanentRedirects;
+    return [...defaultLocaleRedirects, ...permanentRedirects];
+  },
+  async rewrites() {
+    return {
+      beforeFiles: defaultLocaleRewrites,
+      afterFiles: [],
+      fallback: []
+    };
   }
 };
 
