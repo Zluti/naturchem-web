@@ -325,13 +325,13 @@ export const sectorPages: Record<string, SectorPageData> = {
     ]
   },
   "tepelna-cerpadla-vzt": {
-    metadataTitle: "Hluková posouzení pro tepelná čerpadla a VZT",
+    metadataTitle: "Hluková studie pro tepelné čerpadlo a VZT",
     metadataDescription:
-      "Posouzení hluku technologií tepelného čerpadla a vzduchotechniky pro kolaudace, stížnosti i návrh technických opatření.",
-    title: "Tepelná čerpadla a VZT",
+      "Hluková studie nebo měření hluku tepelného čerpadla a VZT pro projekt, kolaudaci či stížnost. Posoudíme denní i noční provoz a doporučíme opatření.",
+    title: "Hluková studie pro tepelné čerpadlo a VZT",
     slug: "tepelna-cerpadla-vzt",
     intro:
-      "Instalujete venkovní jednotku nebo VZT a řešíte hluk vůči sousedům? Posoudíme scénáře denního i nočního režimu ještě před kolaudací.",
+      "Potřebujete hlukovou studii před instalací, nebo měření po spuštění? Posoudíme tepelné čerpadlo či VZT v denním i nočním provozu a doporučíme vhodný postup.",
     typicalProblems: [
       "nevhodné umístění venkovní jednotky vůči zástavbě",
       "podcenění nočního režimu provozu",
