@@ -27,6 +27,8 @@ Při posouzení proto nestačí zjistit, že technologie patří mezi vyjmenovan
 
 Provozní řád se typicky uplatňuje u významnějších spalovacích zdrojů, zařízení pro tepelné zpracování odpadu a u vybraných průmyslových, chemických, zemědělských nebo odpadových technologií. Konkrétní povinnost vždy vychází z aktuálního zařazení zdroje.
 
+**Nejste si jistí, zda je provozní řád pro Váš zdroj povinný?** Pošlete nám kód zdroje, stručný popis technologie, kapacitu a dostupné povolení. [Poslat podklady k posouzení](/kontakt?service=Provozn%C3%AD%20%C5%99%C3%A1dy#poptavkovy-formular).
+
 ## Kdo provozní řád schvaluje
 
 **Provozní řád schvaluje krajský úřad jako součást povolení provozu stacionárního zdroje.** Provozovatel předkládá jeho návrh společně se žádostí o vydání nebo změnu povolení provozu.
