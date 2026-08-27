@@ -19,8 +19,15 @@ export function contactUrl(service: ContactServiceOption | string): string {
 }
 
 /** Poptávka podle hlavní kategorie, například pro prodej přístrojů. */
-export function contactCategoryUrl(category: InquiryCategoryId): string {
-  return `${contactPageHref}?category=${encodeURIComponent(category)}#${CONTACT_FORM_ID}`;
+export function contactCategoryUrl(category: InquiryCategoryId, initialMessage?: string): string {
+  const params = new URLSearchParams({ category });
+  const message = initialMessage?.trim();
+
+  if (message) {
+    params.set("message", message);
+  }
+
+  return `${contactPageHref}?${params.toString()}#${CONTACT_FORM_ID}`;
 }
 
 /** Odkaz z oborové stránky — platné služby + název oboru do formuláře. */

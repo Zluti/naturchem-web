@@ -8,7 +8,7 @@ import { SalesPageToolbar } from "@/components/SalesPageToolbar";
 import { SalesProductCatalog } from "@/components/SalesProductCatalog";
 import { PcfPortableMonitorsChoiceTable } from "@/components/PcfPortableMonitorsChoiceTable";
 import { SalesProductSections } from "@/components/SalesProductSections";
-import { getPageCtaPresets } from "@/lib/i18n/cta-i18n";
+import { getPageCtaPresets, getSalesProductCta } from "@/lib/i18n/cta-i18n";
 import {
   getAllSalesSlugParams,
   getSalesCategory,
@@ -201,6 +201,7 @@ export default async function SalesSlugPage({ params }: Props) {
   if (!match) notFound();
 
   const { brand, product } = match;
+  const productSalesCta = getSalesProductCta(locale, product.title);
   const categoryTitle = product.categoryId
     ? getCategoryLabel(brandSlug, product.categoryId, locale, product.category)
     : product.category;
@@ -299,7 +300,7 @@ export default async function SalesSlugPage({ params }: Props) {
         />
       </section>
 
-      <PageCtaStrip {...pageCtaPresets.sales} className="container" />
+      <PageCtaStrip {...productSalesCta} className="container" />
     </main>
   );
 }

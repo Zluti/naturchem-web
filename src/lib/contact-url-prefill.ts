@@ -21,7 +21,7 @@ function queryParam(value: string | null): string {
   }
 }
 
-/** Reads ?service= / ?sector= / ?services= from a query string (client-side prefill). */
+/** Reads contact-form prefill values from a query string on the client. */
 export function readContactUrlPrefill(search = ""): ContactUrlPrefill {
   const raw = search.startsWith("?") ? search.slice(1) : search;
   const params = new URLSearchParams(raw);
@@ -38,11 +38,14 @@ export function readContactUrlPrefill(search = ""): ContactUrlPrefill {
     : initialServices.length > 0
       ? resolveInquiryCategory(initialServices)
       : undefined;
-  const initialMessage = sectorParam
-    ? sectorContactMessage(sectorParam)
-    : !isValidContactService(serviceParam) && serviceParam
-      ? sectorContactMessage(serviceParam)
-      : "";
+  const messageParam = queryParam(params.get("message")).trim().slice(0, 1000);
+  const initialMessage = messageParam
+    ? messageParam
+    : sectorParam
+      ? sectorContactMessage(sectorParam)
+      : !isValidContactService(serviceParam) && serviceParam
+        ? sectorContactMessage(serviceParam)
+        : "";
 
   return {
     initialServices: [...initialServices],

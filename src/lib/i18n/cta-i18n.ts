@@ -148,3 +148,21 @@ export function getPageCtaPresets(locale: Locale): Record<string, PageCtaStripPr
   // Czech — use existing presets
   return pageCtaPresets;
 }
+
+export function getSalesProductCta(locale: Locale, productTitle: string): PageCtaStripProps {
+  const salesCta = getPageCtaPresets(locale).sales;
+  const messagePrefix =
+    locale === "de"
+      ? "Geräteanfrage"
+      : locale === "en"
+        ? "Instrument inquiry"
+        : "Poptávka přístroje";
+
+  return {
+    ...salesCta,
+    primaryHref: localizeHref(
+      contactCategoryUrl("pristroj", `${messagePrefix}: ${productTitle}`),
+      locale
+    )
+  };
+}
