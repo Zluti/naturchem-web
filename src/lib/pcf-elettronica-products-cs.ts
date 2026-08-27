@@ -245,7 +245,8 @@ export const pcfProductTranslationsCs: Record<string, PcfProductTranslation> = {
   },
   "fid-detector": {
     title: "FID detektor (plamenoionizační detektor)",
-    tagline: "Podsystém plamenoionizačního detektoru",
+    tagline:
+      "FID detektor PCF pro GC a monitorovací přístroje. Citlivý a stabilní podsystém pro detekci uhlovodíků a VOC.",
     intro:
       "FID detektory PCF jsou kompaktní podsystémy pro GC a monitorovací přístroje. FID je nejpoužívanější GC detektor pro uhlovodíky - lineární, stabilní a citlivý na úrovně ppm při napájení čistým vzduchem a vodíkem se stabilními průtoky.",
     features: [

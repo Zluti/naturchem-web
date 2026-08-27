@@ -12,7 +12,7 @@ const summaries: Record<Locale, Record<string, string>> = {
     "portable-monitors":
       "Přenosné FID monitory VOC/THC s ohřátým odběrem pro emise, kontroly a terénní měření.",
     "detectors-fid-pid-tcd":
-      "Detektory plamenové ionizace (FID), fotoionizace (PID) a termokonduktivity (TCD) pro analytické systémy.",
+      "FID detektory PCF Elettronica pro integraci do GC a monitorovacích přístrojů doplňují provedení PID a TCD. Vyberte podle analytu a aplikace.",
     accessories:
       "Sondy, ohřáté odběrové linky, generátory nulového vzduchu, kalibrátory a víceřádkové moduly."
   },
