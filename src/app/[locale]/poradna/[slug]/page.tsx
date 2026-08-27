@@ -19,12 +19,8 @@ type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
-/**
- * ISR instead of force-dynamic: scheduled articles (in generateStaticParams)
- * become public within a day after publishedAt. Decap publish also redeploys.
- * Keep this long — short ISR + large article HTML burns Hobby write units.
- */
-export const revalidate = 86400;
+/** CMS publishing triggers a Vercel deployment; article HTML stays static between deploys. */
+export const revalidate = false;
 
 export async function generateStaticParams() {
   return getArticleStaticParams();

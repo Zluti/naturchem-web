@@ -21,11 +21,8 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-/**
- * Six-hour ISR lets scheduled Poradna articles reach the homepage on publish day.
- * This stays well below the write-heavy hourly refresh used previously.
- */
-export const revalidate = 21600;
+/** CMS publishing triggers a Vercel deployment, so the homepage stays static between deploys. */
+export const revalidate = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;

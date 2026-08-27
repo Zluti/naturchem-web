@@ -18,8 +18,8 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-/** Listing ISR — scheduled articles appear within a day after publishedAt. */
-export const revalidate = 86400;
+/** CMS publishing triggers a Vercel deployment, so the listing needs no time-based ISR. */
+export const revalidate = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;

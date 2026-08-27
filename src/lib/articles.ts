@@ -140,7 +140,7 @@ async function readAllArticlesUncached(locale: Locale): Promise<Article[]> {
   }
 }
 
-/** Cached filesystem scan — cache until deploy. Time-based ISR lives on Poradna routes only. */
+/** Cached filesystem scan — content changes become public through a CMS-triggered deploy. */
 const getAllArticlesCached = unstable_cache(
   async (locale: Locale) => readAllArticlesUncached(locale),
   ["articles-all"],
@@ -190,8 +190,8 @@ export async function getLocalesForArticleSlug(slug: string): Promise<Locale[]> 
 }
 
 /**
- * Static params include scheduled articles (so ISR can publish them without redeploy)
- * but exclude drafts (no public URL until status changes).
+ * Static params include scheduled articles, but they remain non-public until a deployment
+ * runs on or after publishedAt. Drafts have no public URL until their status changes.
  */
 export async function getArticleStaticParams(): Promise<{ locale: Locale; slug: string }[]> {
   const params: { locale: Locale; slug: string }[] = [];

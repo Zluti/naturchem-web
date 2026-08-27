@@ -11,12 +11,8 @@ import { seoLandings } from "@/lib/seo-landings";
 import { getAllSalesCategoryParams } from "@/lib/sales-categories";
 import { pcfElettronicaProducts } from "@/lib/pcf-elettronica-catalog";
 
-/**
- * Daily ISR is enough for scheduled Poradna URLs. lastModified must stay
- * deterministic — a fresh `new Date()` rewrites the whole sitemap every regen
- * and burns Hobby ISR Writes (8 KB units).
- */
-export const revalidate = 86400;
+/** CMS publishing redeploys the site, so the sitemap remains static between deploys. */
+export const revalidate = false;
 
 const salesCategoryRoutes = getAllSalesCategoryParams().flatMap(({ brand, slug }) => [
   `/prodej/${brand}/${slug}`

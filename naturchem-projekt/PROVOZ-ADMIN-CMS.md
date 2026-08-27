@@ -2,7 +2,7 @@
 
 > **Web:** https://www.naturchem.cz  
 > **Redakce:** https://www.naturchem.cz/admin  
-> **Repozitář:** https://github.com/Zluti/naturchem-web  
+> **Repozitář:** https://github.com/Ikaros277/naturchem-web
 
 ---
 
@@ -10,7 +10,7 @@
 
 | Potřebuje | Nepotřebuje |
 |-----------|-------------|
-| GitHub účet s **oprávněním zapisovat** do repozitáře `Zluti/naturchem-web` | Přístup do Vercelu |
+| GitHub účet s **oprávněním zapisovat** do repozitáře `Ikaros277/naturchem-web` | Přístup do Vercelu |
 | Přihlášení v `/admin` přes GitHub | Ruční deploy nebo úpravy kódu |
 
 **Vercel je jen automatický „tiskárna“:** po uložení článku v CMS se změna zapíše do GitHubu a Vercel web sám znovu nasadí (obvykle za 1–3 minuty). Klient do Vercelu vůbec nemusí.
@@ -44,10 +44,12 @@ Přesné místo v redakci:
 
 Výsledek:
 
-- článek se uloží do GitHubu hned,
-- na veřejném webu (`/poradna`) **není vidět**, dokud nenastane zvolené datum,
-- od **půlnoci středoevropského času** daného dne je článek způsobilý ke zveřejnění,
-- na webu se objeví při další návštěvě poradny / článku (obvykle do cca 1 minuty; není to cron přesně ve 00:00:00 bez provozu).
+- článek se uloží do GitHubu hned a Vercel vytvoří statický build, ve kterém zůstane do budoucího data skrytý,
+- na veřejném webu (`/poradna`) **není vidět**, dokud po nastaveném datu neproběhne nový deployment,
+- v den zveřejnění otevřete článek v `/admin`, zkontrolujte datum a znovu klikněte **Publish**; tím vznikne commit a nový build,
+- po úspěšném deploymentu se článek, přehled Poradny, homepage i sitemap aktualizují současně, obvykle během 1–3 minut.
+
+Tento postup záměrně nepoužívá časové ISR přegenerování. Chrání rezervu bezplatného Vercel tarifu a současně zajišťuje, že běžně publikovaný článek s dnešním nebo minulým datem je viditelný hned po deploymentu.
 
 **Koncept bez data publikace:**  
 **Stav publikace** → **„Koncept (skrytý na webu)“** → Publish. Článek zůstane skrytý, dokud stav nezměníte na Publikovat a nedáte datum dnes/v minulosti (nebo budoucí pro odložení).
@@ -76,7 +78,7 @@ Výsledek:
 Postupujte v tomto pořadí:
 
 1. **Publish znovu** — objevila se červená chyba? (práva, přihlášení, síť)
-2. **GitHub** — otevřete soubor článku v repu `Zluti/naturchem-web` → je v něm nový text?
+2. **GitHub** — otevřete soubor článku v repu `Ikaros277/naturchem-web` → je v něm nový text?
    - **Ne** → úprava se neuložila; napište správci webu.
    - **Ano** → počkejte 3 minuty a obnovte stránku článku (Ctrl+F5 nebo anonymní okno).
 3. **Správce webu** ověří ve Vercelu, že poslední deploy běžel **po** tom commitu.
@@ -94,7 +96,7 @@ Postupujte v tomto pořadí:
 
 ## Pro správce webu (jednorázová kontrola)
 
-Všechny tři body musí ukazovat **stejné repo** `Zluti/naturchem-web`, větev `main`:
+Všechny tři body musí ukazovat **stejné repo** `Ikaros277/naturchem-web`, větev `main`:
 
 - [ ] Vercel → Project → Settings → Git → Connected Repository  
 - [ ] `public/admin/config.yml` → `backend.repo`  
