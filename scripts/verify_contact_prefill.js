@@ -65,6 +65,12 @@ const { readContactUrlPrefill } = loadTypeScriptModule(
 const { contactCategoryUrl } = loadTypeScriptModule(
   path.join(projectRoot, "src", "lib", "contact-url.ts")
 );
+const {
+  getPriorityContactServiceChoices,
+  includeInitialContactServiceChoices
+} = loadTypeScriptModule(
+  path.join(projectRoot, "src", "lib", "i18n", "contact-inquiry-i18n.ts")
+);
 
 const operatingRules = readContactUrlPrefill(
   "?service=Provozn%C3%AD%20%C5%99%C3%A1dy"
@@ -72,6 +78,41 @@ const operatingRules = readContactUrlPrefill(
 assert.deepEqual(operatingRules.initialServices, ["Provozní řády"]);
 assert.equal(operatingRules.initialCategory, "studie");
 assert.equal(operatingRules.initialMessage, "");
+
+const eia = readContactUrlPrefill(
+  "?service=EIA%20a%20ozn%C3%A1men%C3%AD%20z%C3%A1m%C4%9Bru"
+);
+assert.deepEqual(eia.initialServices, ["EIA a oznámení záměru"]);
+assert.equal(eia.initialCategory, "eia");
+assert.equal(eia.initialMessage, "");
+
+const visibleEiaChoices = includeInitialContactServiceChoices(
+  "cs",
+  getPriorityContactServiceChoices("cs"),
+  eia.initialServices
+);
+assert.equal(visibleEiaChoices[0].value, "EIA a oznámení záměru");
+assert.equal(visibleEiaChoices[0].label, "EIA a oznámení záměru");
+assert.equal(
+  visibleEiaChoices.filter((choice) => choice.value === "EIA a oznámení záměru").length,
+  1
+);
+assert.equal(
+  includeInitialContactServiceChoices(
+    "en",
+    getPriorityContactServiceChoices("en"),
+    eia.initialServices
+  )[0].label,
+  "EIA and notification of intent"
+);
+assert.equal(
+  includeInitialContactServiceChoices(
+    "de",
+    getPriorityContactServiceChoices("de"),
+    eia.initialServices
+  )[0].label,
+  "UVP und Absichtserklärung"
+);
 
 const productMessage = "Poptávka přístroje: FID detektor";
 const productUrl = contactCategoryUrl("pristroj", productMessage);

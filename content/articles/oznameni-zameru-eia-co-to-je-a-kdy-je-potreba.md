@@ -49,6 +49,8 @@ EIA se nemusí týkat jen úplně nové stavby. Může se týkat také **změny 
 
 > **Prakticky:** Pokud není jisté, zda záměr spadá do EIA, je vhodné ověřit zařazení ještě před dokončením projektové dokumentace. Pozdě řešená EIA může výrazně zdržet navazující povolování.
 
+**Nejste si jistí, zda Váš záměr spadá do EIA?** Pošlete nám stručný popis záměru, kapacitu, umístění a dostupnou projektovou dokumentaci. [Poslat podklady k prvotnímu posouzení](/kontakt?service=EIA%20a%20ozn%C3%A1men%C3%AD%20z%C3%A1m%C4%9Bru#poptavkovy-formular)
+
 ## Co oznámení není
 
 Oznámení záměru se často zaměňuje s projektovou dokumentací. To je chyba.

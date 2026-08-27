@@ -20,8 +20,11 @@ export type ContactServiceChoice = {
   label: string;
 };
 
-export function getPriorityContactServiceChoices(locale: Locale): ContactServiceChoice[] {
-  return PRIORITY_CONTACT_SERVICE_OPTIONS.map((value) => ({
+export function getContactServiceChoice(
+  locale: Locale,
+  value: ContactServiceOption
+): ContactServiceChoice {
+  return {
     value,
     label:
       locale === "en"
@@ -29,5 +32,22 @@ export function getPriorityContactServiceChoices(locale: Locale): ContactService
         : locale === "de"
           ? CONTACT_SERVICE_LABELS_DE[value]
           : value
-  }));
+  };
+}
+
+export function getPriorityContactServiceChoices(locale: Locale): ContactServiceChoice[] {
+  return PRIORITY_CONTACT_SERVICE_OPTIONS.map((value) => getContactServiceChoice(locale, value));
+}
+
+export function includeInitialContactServiceChoices(
+  locale: Locale,
+  choices: ContactServiceChoice[],
+  initialServices: ContactServiceOption[]
+): ContactServiceChoice[] {
+  const existing = new Set(choices.map((choice) => choice.value));
+  const additional = initialServices
+    .filter((service) => !existing.has(service))
+    .map((service) => getContactServiceChoice(locale, service));
+
+  return [...additional, ...choices];
 }

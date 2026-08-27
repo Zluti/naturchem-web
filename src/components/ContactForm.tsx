@@ -5,8 +5,11 @@ import { useState } from "react";
 import { legalPaths } from "@/lib/legal";
 import { resolveInquiryCategory, type InquiryCategoryId } from "@/lib/contact-inquiry";
 import type { ContactServiceOption } from "@/lib/contact-services";
-import type { getPriorityContactServiceChoices } from "@/lib/i18n/contact-inquiry-i18n";
 import { sendGtagEvent } from "@/lib/gtag";
+import {
+  includeInitialContactServiceChoices,
+  type getPriorityContactServiceChoices
+} from "@/lib/i18n/contact-inquiry-i18n";
 import { useLocale, useTranslations } from "@/lib/i18n/locale-context";
 import { LocaleLink } from "@/lib/i18n/locale-link";
 import { company } from "@/lib/site";
@@ -32,6 +35,11 @@ export function ContactForm({
   const [feedback, setFeedback] = useState("");
   const [contactChannelError, setContactChannelError] = useState(false);
   const [selectedServices, setSelectedServices] = useState<ContactServiceOption[]>(initialServices);
+  const visibleServiceChoices = includeInitialContactServiceChoices(
+    locale,
+    serviceChoices,
+    initialServices
+  );
   const inquiryCategory =
     selectedServices.length > 0 ? resolveInquiryCategory(selectedServices) : initialCategory;
 
@@ -252,7 +260,7 @@ export function ContactForm({
         <legend>{t.serviceLabel}</legend>
         <p className="contact-service-choices-hint muted">{t.serviceHint}</p>
         <div className="contact-service-choices-grid">
-          {serviceChoices.map((service) => {
+          {visibleServiceChoices.map((service) => {
             const checked = selectedServices.includes(service.value);
             return (
               <label key={service.value} className="contact-service-choice">
@@ -275,7 +283,7 @@ export function ContactForm({
           })}
         </div>
         {selectedServices
-          .filter((service) => !serviceChoices.some((choice) => choice.value === service))
+          .filter((service) => !visibleServiceChoices.some((choice) => choice.value === service))
           .map((service) => (
             <input key={service} type="hidden" name="services" value={service} />
           ))}
