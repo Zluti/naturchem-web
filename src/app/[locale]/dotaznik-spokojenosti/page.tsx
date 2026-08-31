@@ -4,6 +4,8 @@ import { SatisfactionSurveyForm } from "@/components/SatisfactionSurveyForm";
 import { JsonLd } from "@/components/Schema";
 import { getPageHeroTheme } from "@/lib/hero-images";
 import { getInquiryCategories } from "@/lib/i18n/contact-inquiry-i18n";
+import "../contact-forms.css";
+import "./satisfaction.css";
 import { getMessages } from "@/lib/i18n/get-messages";
 import { pageMetadata, withNoindex } from "@/lib/i18n/metadata-helpers";
 import { localizeHref } from "@/lib/i18n/navigation";

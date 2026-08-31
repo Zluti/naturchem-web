@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
-import { HeroPhoto } from "@/components/HeroPhoto";
 import type { HomeHeroPillar, HomeHeroPillarId } from "@/lib/home-hero-pillars";
 import { LocaleLink } from "@/lib/i18n/locale-link";
 import { getServiceCategoryFromPillarId } from "@/lib/service-categories";
@@ -39,11 +38,25 @@ type Props = {
   initialPhoto: ReactNode;
   children: ReactNode;
   pillars: HomeHeroPillar[];
+  photoConfigs: HomeHeroPhotoConfig[];
   ariaLabel: string;
   pillarsAriaLabel: string;
 };
 
-export function HomeHeroShell({ initialPhoto, children, pillars, ariaLabel, pillarsAriaLabel }: Props) {
+export type HomeHeroPhotoConfig = {
+  id: HomeHeroPillarId;
+  src: string;
+  position: string;
+};
+
+export function HomeHeroShell({
+  initialPhoto,
+  children,
+  pillars,
+  photoConfigs,
+  ariaLabel,
+  pillarsAriaLabel
+}: Props) {
   const [activeId, setActiveId] = useState<HomeHeroPillarId>(INITIAL_PILLAR_ID);
   const [mountedIds, setMountedIds] = useState<ReadonlySet<HomeHeroPillarId>>(
     () => new Set([INITIAL_PILLAR_ID])
@@ -168,6 +181,7 @@ export function HomeHeroShell({ initialPhoto, children, pillars, ariaLabel, pill
       >
         {pillars.map((pillar) => {
           if (!mountedIds.has(pillar.id)) return null;
+          const photoConfig = photoConfigs.find((config) => config.id === pillar.id);
 
           return (
             <div
@@ -175,7 +189,20 @@ export function HomeHeroShell({ initialPhoto, children, pillars, ariaLabel, pill
               className={activeId === pillar.id ? "hero-photo-layer is-active" : "hero-photo-layer"}
               aria-hidden={activeId !== pillar.id}
             >
-              {pillar.id === INITIAL_PILLAR_ID ? initialPhoto : <HeroPhoto theme={pillar.theme} />}
+              {pillar.id === INITIAL_PILLAR_ID ? (
+                initialPhoto
+              ) : photoConfig ? (
+                // eslint-disable-next-line @next/next/no-img-element -- Secondary static hero media mounts only after interaction and avoids initial image runtime.
+                <img
+                  src={photoConfig.src}
+                  alt=""
+                  className="hero-photo-img"
+                  style={{ objectPosition: photoConfig.position }}
+                  loading="lazy"
+                  decoding="async"
+                  fetchPriority="low"
+                />
+              ) : null}
             </div>
           );
         })}

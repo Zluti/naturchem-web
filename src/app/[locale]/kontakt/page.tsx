@@ -6,6 +6,7 @@ import { ServiceIcon } from "@/components/ServiceIcon";
 import { company, getCompanyOffices, siteUrl } from "@/lib/site";
 import { JsonLd } from "@/components/Schema";
 import { getPageHeroTheme } from "@/lib/hero-images";
+import "../contact-forms.css";
 import { getPriorityContactServiceChoices } from "@/lib/i18n/contact-inquiry-i18n";
 import { getMessages } from "@/lib/i18n/get-messages";
 import { pageMetadata } from "@/lib/i18n/metadata-helpers";

@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 type BrandLogoProps = {
   className?: string;
   priority?: boolean;
@@ -39,14 +37,16 @@ export function BrandLogo({
   }
 
   return (
-    <Image
+    // eslint-disable-next-line @next/next/no-img-element -- The 529-byte static logo avoids an image transformation and its client runtime.
+    <img
       src="/graphics/naturchem-logo.png"
       alt=""
       width={248}
       height={52}
       className={`brand-logo ${className}`.trim()}
-      priority={priority}
-      sizes="(max-width: 480px) 160px, (max-width: 1023px) 200px, 248px"
+      loading="eager"
+      decoding="async"
+      fetchPriority={priority ? "high" : "low"}
     />
   );
 }

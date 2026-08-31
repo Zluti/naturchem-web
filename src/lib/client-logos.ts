@@ -52,26 +52,26 @@ export const referenceClients: ClientLogo[] = [
   { name: "Strabag", logo: "/loga-referenci/strabag.svg", website: "https://www.strabag.cz" },
   {
     name: "Swietelsky stavební",
-    logo: "/loga-referenci/swietelsky.png",
+    logo: "/loga-referenci/swietelsky.webp",
     website: "https://www.swietelsky.cz",
     wide: true
   },
-  { name: "Letiště České Budějovice", logo: "/loga-referenci/letiste-cb.png", website: "https://www.airport-cb.cz" },
+  { name: "Letiště České Budějovice", logo: "/loga-referenci/letiste-cb.webp", website: "https://www.airport-cb.cz" },
   {
     name: "Teplárna České Budějovice",
-    logo: "/loga-referenci/teplarnatucb.png",
+    logo: "/loga-referenci/teplarnatucb.webp",
     website: "https://www.teplarna-cb.cz",
     wide: true
   },
   {
     name: "Teplárna Písek",
-    logo: "/loga-referenci/teplarnapisek.png",
+    logo: "/loga-referenci/teplarnapisek.webp",
     website: "https://www.tpi.cz",
     wide: true
   },
   {
     name: "Teplárna Strakonice",
-    logo: "/loga-referenci/teplarnastrakonice.png",
+    logo: "/loga-referenci/teplarnastrakonice.webp",
     website: "https://www.teplarnastrakonice.cz",
     wide: true
   },

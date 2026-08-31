@@ -223,7 +223,9 @@ async function tryReadArticleByFileSlug(
 }
 
 /**
- * Prefer direct `{slug}.md` read; fall back to cached catalog when frontmatter slug differs.
+ * Prefer direct `{slug}.md` only when its public slug matches the requested URL.
+ * A renamed CMS article may reuse a filename belonging to another public slug.
+ * Fall back to the cached catalog in that case, including when the direct file is scheduled.
  * React cache() dedupes metadata + page in the same request.
  */
 export const getArticleBySlug = cache(
@@ -236,10 +238,7 @@ export const getArticleBySlug = cache(
         const direct = await tryReadArticleByFileSlug(candidate, locale);
         if (
           direct &&
-          (direct.slug === slug ||
-            direct.slug === decoded ||
-            candidate === slug ||
-            candidate === decoded)
+          (direct.slug === slug || direct.slug === decoded)
         ) {
           return isArticlePublic(direct) ? direct : null;
         }

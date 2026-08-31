@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { EquipmentGroupsIndex } from "@/components/EquipmentGroupsIndex";
+import "./equipment.css";
 import { PageCtaStrip } from "@/components/PageCtaStrip";
 import { PageHeroBand } from "@/components/PageHeroBand";
 import { JsonLd } from "@/components/Schema";

@@ -2,8 +2,12 @@ export type HeroTheme = string;
 
 export type HeroImageConfig = {
   src: string;
+  /** AVIF varianta velkého obrázku, pokud je pro daný hero připravená. */
+  avifSrc?: string;
   /** Menší varianta pro mobilní LCP (srcset / picture). */
   mobileSrc?: string;
+  /** Úspornější AVIF varianta mobilního LCP; WebP zůstává jako fallback. */
+  mobileAvifSrc?: string;
   /** Jiná fotka pro přehledovou sekci na stránce služby (ServiceContextPhoto). */
   contextSrc?: string;
   /** CSS object-position — kde má být fokus (např. "70% 30%", "center top"). Výchozí: "center center". */
@@ -32,7 +36,12 @@ const eiaHero = hero("eia", "eia-context");
  * Per-slug přiřazení fotek. Klíč = bare slug (bez lomítek).
  */
 const heroSlugImages: Record<string, HeroImageConfig> = {
-  "homepage-mereni": { ...hero("homepage-mereni"), mobileSrc: "/hero/homepage-mereni-640.webp" },
+  "homepage-mereni": {
+    ...hero("homepage-mereni"),
+    avifSrc: "/hero/homepage-mereni.avif",
+    mobileSrc: "/hero/homepage-mereni-640.webp",
+    mobileAvifSrc: "/hero/homepage-mereni-640.avif"
+  },
   "homepage-studie": hero("homepage-studie"),
   "homepage-eia": hero("homepage-eia"),
 
@@ -105,11 +114,15 @@ export function getHeroImageConfig(theme: string): HeroImageConfig {
   return resolveConfig(theme);
 }
 
-export function getHeroLcpSources(theme: string): { src: string; mobileSrc: string } {
+export function getHeroLcpSources(
+  theme: string
+): { src: string; avifSrc?: string; mobileSrc: string; mobileAvifSrc?: string } {
   const config = resolveConfig(theme);
   return {
     src: config.src,
-    mobileSrc: config.mobileSrc ?? config.src
+    avifSrc: config.avifSrc,
+    mobileSrc: config.mobileSrc ?? config.src,
+    mobileAvifSrc: config.mobileAvifSrc
   };
 }
 

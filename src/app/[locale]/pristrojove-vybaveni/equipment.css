@@ -1,0 +1,50 @@
+/* Route-specific styles: equipment. */
+.equipment-group-details .service-group-summary-text {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
+.equipment-groups-accordion {
+  padding-top: 0;
+}
+
+.service-group-details.equipment-group-details .equipment-group-body {
+  padding: 1.15rem 1.25rem 1.25rem;
+}
+
+.equipment-service-link {
+  margin: 1rem 0 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.equipment-service-link a {
+  color: var(--primary);
+}
+
+.equipment-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.equipment-card-head h2 {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+.equipment-card-head .card-symbol {
+  background: none;
+  border: none;
+  border-radius: 0;
+  width: auto;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.equipment-card-head .card-symbol:not([class*="service-icon--"]) {
+  color: var(--forest);
+}

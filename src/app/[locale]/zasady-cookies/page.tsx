@@ -4,6 +4,7 @@ import { getCookiesPage } from "@/lib/i18n/content";
 import { pageMetadata, withNoindex } from "@/lib/i18n/metadata-helpers";
 import { isLocale, type Locale } from "@/lib/i18n/locales";
 import { legalPaths } from "@/lib/legal";
+import "../legal.css";
 
 type Props = {
   params: Promise<{ locale: string }>;

@@ -3,7 +3,7 @@ import { HomeHeroSection } from "@/components/HomeHeroSection";
 import { ExperienceStats } from "@/components/ExperienceStats";
 import { HomeServiceIndex } from "@/components/HomeServiceIndex";
 import { JsonLd } from "@/components/Schema";
-import { ClientLogosGrid } from "@/components/ClientLogosGrid";
+import { ClientLogosPreview } from "@/components/ClientLogosPreview";
 import { HomePoradnaStrip } from "@/components/HomePoradnaStrip";
 import { HomeDemandPaths } from "@/components/HomeDemandPaths";
 import { HomeTechnicalMotif } from "@/components/HomeTechnicalMotif";
@@ -109,7 +109,7 @@ export default async function Home({ params }: Props) {
           <header className="section-header home-clients-header">
             <h2 id="home-clients-heading">{messages.home.clientsTitle}</h2>
           </header>
-          <ClientLogosGrid expandable moreHref={link("/reference#zakaznici")} />
+          <ClientLogosPreview locale={locale} moreHref={link("/reference#zakaznici")} />
         </div>
       </section>
 

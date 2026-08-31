@@ -1,0 +1,116 @@
+/* Route-specific styles: satisfaction survey. */
+.satisfaction-survey-section {
+  padding-bottom: 3rem;
+}
+
+.satisfaction-ratings-block {
+  display: grid;
+  gap: 1rem;
+}
+
+.satisfaction-rating-fieldset {
+  margin: 0;
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1px solid var(--border);
+}
+
+.satisfaction-rating-scale {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.65rem;
+}
+
+@media (min-width: 640px) {
+  .satisfaction-rating-scale {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+}
+
+.satisfaction-rating-option {
+  display: grid;
+  gap: 0.2rem;
+  justify-items: center;
+  text-align: center;
+  padding: 0.65rem 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sharp);
+  background: #fff;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.satisfaction-rating-option:has(input:checked) {
+  border-color: #1d4f8c;
+  background: rgba(29, 79, 140, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(29, 79, 140, 0.18);
+}
+
+.satisfaction-rating-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.satisfaction-rating-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #133767;
+  line-height: 1;
+}
+
+.satisfaction-rating-label {
+  font-size: 0.78rem;
+  line-height: 1.25;
+  color: var(--muted);
+}
+
+.satisfaction-nps-scale {
+  display: grid;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+  gap: 0.35rem;
+  margin-top: 0.55rem;
+}
+
+.satisfaction-nps-option {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sharp);
+  background: #fff;
+  cursor: pointer;
+  font-weight: 650;
+  color: #133767;
+}
+
+.satisfaction-nps-option:has(input:checked) {
+  border-color: #1d4f8c;
+  background: rgba(29, 79, 140, 0.08);
+}
+
+.satisfaction-nps-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.satisfaction-nps-hints {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0.55rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+@media (min-width: 1200px) {
+  .satisfaction-nps-fieldset {
+    max-width: 860px;
+  }
+
+  .satisfaction-nps-fieldset .satisfaction-nps-scale,
+  .satisfaction-nps-fieldset .satisfaction-nps-hints {
+    max-width: 760px;
+  }
+}

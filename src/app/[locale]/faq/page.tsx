@@ -13,6 +13,7 @@ import { isLocale, type Locale } from "@/lib/i18n/locales";
 import { buildFaqPageJsonLd } from "@/lib/faq-jsonld";
 import { getPageHeroTheme } from "@/lib/hero-images";
 import { siteUrl } from "@/lib/site";
+import "./faq.css";
 
 type Props = {
   params: Promise<{ locale: string }>;
