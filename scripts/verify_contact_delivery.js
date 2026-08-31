@@ -1,0 +1,166 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const assert = require("node:assert/strict");
+const path = require("node:path");
+const createLoader = require("./lib/load-typescript.js");
+const root = path.resolve(__dirname, "..");
+const load = createLoader();
+const { getAttachmentError } = load(path.join(root, "src/lib/attachment-validation.ts"));
+const limit = 4 * 1024 * 1024;
+const pdf = { name: "podklady.pdf", type: "application/pdf", size: limit };
+assert.equal(getAttachmentError([pdf]), null);
+assert.equal(getAttachmentError([{ ...pdf, size: limit + 1 }]), "attachmentsTooLarge");
+assert.equal(getAttachmentError([pdf, { ...pdf, size: 1 }]), "attachmentsTooLarge");
+assert.equal(getAttachmentError(Array(6).fill({ ...pdf, size: 1 })), "tooManyAttachments");
+assert.equal(getAttachmentError([{ ...pdf, name: "program.exe" }]), "invalidAttachment");
+assert.equal(getAttachmentError([{ ...pdf, type: "text/html" }]), "invalidAttachment");
+assert.equal(getAttachmentError([{ ...pdf, type: "" }]), null);
+assert.equal(getAttachmentError([{ ...pdf, type: "application/octet-stream" }]), null);
+assert.equal(getAttachmentError([]), null);
+
+const nativeFetch = global.fetch;
+const NativeFormData = global.FormData;
+const originalError = console.error;
+const envNames = ["RESEND_API_KEY", "CONTACT_FROM_EMAIL", "CONTACT_TO_EMAILS"];
+const originalEnv = Object.fromEntries(envNames.map((key) => [key, process.env[key]]));
+
+function data(overrides = {}) {
+  const form = new NativeFormData();
+  for (const [key, value] of Object.entries({ name: "Test Company", email: "test@example.invalid", phone: "", message: "Synthetic test only", consent: "on", inquiryCategory: "studie", ...overrides })) {
+    form.set(key, value);
+  }
+  form.append("services", "IPPC a integrovaná povolení");
+  return form;
+}
+
+function api({ send, allowed = true, scheduleThrows = false } = {}) {
+  const emails = [];
+  const afterResponse = [];
+  const mocked = createLoader({
+    resend: { Resend: class { emails = { send: async (payload) => {
+      emails.push(payload);
+      return send ? send(payload, emails.length) : { data: { id: "test-mail-id" }, error: null };
+    } }; } },
+    "next/server": { NextResponse: Response, after: (fn) => {
+      if (scheduleThrows) throw new Error("Synthetic scheduling failure");
+      afterResponse.push(fn);
+    } },
+    "@/lib/rate-limit": { checkRateLimit: () => ({ allowed, retryAfterSec: 60 }), getClientIp: () => "test" }
+  });
+  const { POST } = mocked(path.join(root, "src/app/api/contact/route.ts"));
+  return { emails, afterResponse, submit: (form, locale = "cs") => POST(new Request("https://example.invalid/api/contact/", { method: "POST", body: form, headers: { "accept-language": locale } })) };
+}
+
+function client(formData, response) {
+  const events = [], requests = [], states = [], focus = [];
+  let stateIndex = 0;
+  const mocked = createLoader({
+    react: { useState: (initial) => { const id = stateIndex++; return [initial, (value) => states.push({ id, value })]; }, useRef: (value) => ({ current: value }) },
+    "@/lib/i18n/locale-context": { useLocale: () => "cs", useTranslations: (ns) => require("../messages/cs.json")[ns] },
+    "@/lib/i18n/locale-link": { LocaleLink: () => null },
+    "@/lib/gtag": { sendGtagEvent: (name, params) => events.push({ name, params }) }
+  });
+  const { ContactForm } = mocked(path.join(root, "src/components/ContactForm.tsx"));
+  const tree = ContactForm({ serviceChoices: [] });
+  assert.equal(tree.props.method, "post", "Missing JavaScript must never put inquiry details in the URL");
+  assert.equal(tree.props.action, "/api/contact/");
+  assert.equal(tree.props.encType, "multipart/form-data");
+  const form = { fixtureData: formData, reset: () => {}, querySelector: (selector) => ({ focus: () => focus.push(selector) }) };
+  global.FormData = class { constructor(value) { return value.fixtureData; } };
+  global.fetch = async (...args) => { requests.push(args); return response ? await response() : Response.json({ ok: true, leadId: "test-lead-id", message: "OK" }); };
+  return { events, requests, states, focus, submit: () => tree.props.onSubmit({ preventDefault() {}, currentTarget: form }) };
+}
+
+async function main() {
+  // The complete test is isolated from email providers, analytics and other networks.
+  global.fetch = async () => { throw new Error("Network access is forbidden in this test"); };
+  console.error = () => {};
+  process.env.RESEND_API_KEY = "test-only-not-a-real-key";
+  process.env.CONTACT_FROM_EMAIL = "forms@example.invalid";
+  process.env.CONTACT_TO_EMAILS = "office@example.invalid";
+
+  for (const locale of ["cs", "en", "de"]) {
+    const fixture = api();
+    const result = await fixture.submit(data(), locale);
+    assert.equal(result.status, 200);
+    const body = await result.json();
+    assert.match(body.leadId, /^[\da-f-]{36}$/);
+    assert.ok(fixture.emails[0].text.includes(`ID poptávky: ${body.leadId}`));
+    assert.ok(fixture.emails[0].text.includes("IPPC a integrovaná povolení"));
+    assert.equal(fixture.emails.length, 1, "Response does not wait for the courtesy email");
+    assert.equal(fixture.afterResponse.length, 1);
+    await fixture.afterResponse[0]();
+    assert.equal(fixture.emails.length, 2);
+  }
+  for (const send of [
+    (_, count) => ({ error: count === 2 ? { name: "synthetic" } : null }),
+    (_, count) => { if (count === 2) throw new Error("Synthetic confirmation failure"); return { error: null }; }
+  ]) {
+    const fixture = api({ send });
+    const result = await fixture.submit(data());
+    assert.equal(result.status, 200);
+    assert.ok((await result.json()).leadId);
+    await fixture.afterResponse[0](); // No uncaught exception; accepted inquiry is preserved.
+  }
+  const scheduling = api({ scheduleThrows: true });
+  assert.equal((await scheduling.submit(data())).status, 200);
+  for (const send of [() => ({ error: { name: "synthetic" } }), () => { throw new Error("Synthetic internal send failure"); }]) {
+    const fixture = api({ send });
+    const result = await fixture.submit(data());
+    assert.ok(result.status >= 500);
+    assert.equal((await result.json()).leadId, undefined);
+    assert.equal(fixture.afterResponse.length, 0);
+  }
+  const phoneOnly = api();
+  assert.equal((await phoneOnly.submit(data({ email: "", phone: "123456789" }))).status, 200);
+  assert.equal(phoneOnly.afterResponse.length, 0);
+  const invalid = api();
+  assert.equal((await invalid.submit(data({ name: "" }))).status, 400);
+  assert.equal(invalid.emails.length, 0);
+  const spam = api();
+  assert.equal((await (await spam.submit(data({ website: "bot" }))).json()).leadId, undefined);
+  assert.equal(spam.emails.length, 0);
+  assert.equal((await api({ allowed: false }).submit(data())).status, 429);
+  const large = data();
+  large.append("attachments", new File([new Uint8Array(limit + 1)], "podklady.pdf", { type: "application/pdf" }));
+  const invalidUpload = api();
+  assert.equal((await invalidUpload.submit(large)).status, 400);
+  assert.equal(invalidUpload.emails.length, 0);
+
+  const blockedUpload = client(large);
+  await blockedUpload.submit();
+  assert.equal(blockedUpload.requests.length, 0, "Oversize upload never reaches the network");
+  assert.deepEqual(blockedUpload.focus, ["#contact-attachments-input"]);
+  assert.ok(blockedUpload.states.some((s) => typeof s.value === "string" && s.value.includes("4 MB")));
+  const noContact = client(data({ email: "", phone: "" }));
+  await noContact.submit();
+  assert.equal(noContact.requests.length, 0);
+  assert.deepEqual(noContact.focus, ["#contact-email-input"]);
+  let finish;
+  const duplicate = client(data(), () => new Promise((resolve) => { finish = resolve; }));
+  const first = duplicate.submit();
+  await duplicate.submit();
+  assert.equal(duplicate.requests.length, 1, "Rapid double submission produces only one request");
+  finish(Response.json({ ok: true, leadId: "accepted-test-id", message: "OK" }));
+  await first;
+  assert.equal(duplicate.events.length, 1);
+  assert.equal(duplicate.events[0].params.lead_id, "accepted-test-id");
+  for (const form of [data({ website: "bot" }), data()]) {
+    const fixture = client(form, () => Response.json({ ok: true, message: "OK" }));
+    await fixture.submit();
+    assert.equal(fixture.events.length, 0, "No successful lead without an accepted server lead ID");
+  }
+  const failed = client(data(), () => Response.json({ ok: false, message: "Synthetic failure" }, { status: 502 }));
+  await failed.submit();
+  assert.equal(failed.events.length, 0);
+  console.log("PASS contact delivery: shared upload limits, no-upload validation, double-submit guard, CS/EN/DE, async confirmations, failure isolation, lead identity and spam exclusion");
+}
+
+main().catch((error) => { originalError(error); process.exitCode = 1; }).finally(() => {
+  global.fetch = nativeFetch;
+  global.FormData = NativeFormData;
+  console.error = originalError;
+  for (const key of envNames) {
+    if (originalEnv[key] === undefined) delete process.env[key];
+    else process.env[key] = originalEnv[key];
+  }
+});

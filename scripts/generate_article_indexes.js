@@ -1,0 +1,67 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const fs = require("node:fs");
+const path = require("node:path");
+const { readCatalog } = require("./scheduled_publication.js");
+const root = path.resolve(__dirname, "..");
+const site = "https://www.naturchem.cz";
+const locales = ["cs", "en", "de"];
+const headings = { cs: "České články", en: "English articles", de: "Deutsche Artikel" };
+
+function buildArticleIndexes(catalog, now = Date.now()) {
+  // All artifacts share the real YAML parser and the site's Prague date normalizer.
+  const publicArticles = catalog.filter((a) => Number.isFinite(Date.parse(a.publishedAt)) && Date.parse(a.publishedAt) <= now);
+  const localeMap = {};
+  const searches = {};
+  const seen = new Set();
+  for (const article of publicArticles) {
+    const key = `${article.locale}/${article.slug}`;
+    if (seen.has(key)) throw new Error(`Duplicate public article: ${key}`);
+    seen.add(key);
+    (localeMap[article.slug] ??= []).push(article.locale);
+  }
+  const sortedMap = Object.fromEntries(Object.keys(localeMap).sort().map((slug) => [slug, localeMap[slug].sort((a, b) => locales.indexOf(a) - locales.indexOf(b))]));
+  const csCount = publicArticles.filter((a) => a.locale === "cs").length;
+  const llms = [
+    "# NATURCHEM — odborné články (poradna)", "",
+    `> ${csCount} published Czech articles on environmental permitting, measurements, EIA, ISPOP, and operations; available translations listed below.`, "",
+    "## Index", "",
+    `- Poradna hub (CS): ${site}/poradna/`,
+    `- Knowledge base (EN): ${site}/en/poradna/`,
+    `- Wissensdatenbank (DE): ${site}/de/poradna/`, ""
+  ];
+  for (const locale of locales) {
+    const articles = publicArticles.filter((a) => a.locale === locale).sort((a, b) => a.slug.localeCompare(b.slug));
+    searches[locale] = articles.map((a) => {
+      const body = a.body.replace(/```[\s\S]*?```/g, " ").replace(/#{1,6}\s+/g, " ")
+        .replace(/\|[^\n]+\|/g, " ").replace(/[*_~`>#\\-]/g, " ").replace(/\s+/g, " ").trim();
+      const search = `${a.title} ${a.excerpt} ${body}`.toLocaleLowerCase(locale).slice(0, 1800);
+      return { slug: a.slug, s: search };
+    });
+    llms.push(`## ${headings[locale]}`, "");
+    for (const article of articles) {
+      const title = article.title.replace(/\s+/g, " ").trim();
+      llms.push(`- ${title}: ${site}${locale === "cs" ? "" : `/${locale}`}/poradna/${article.slug}/`);
+    }
+    llms.push("");
+  }
+  llms.push("## Sitemap", "", `${site}/sitemap.xml`, "");
+  return { localeMap: sortedMap, searches, llms: llms.join("\n") };
+}
+
+function main() {
+  const only = process.argv[2] || "all";
+  if (!["all", "locale-map", "search", "llms"].includes(only)) throw new Error("Use all, locale-map, search or llms.");
+  const indexes = buildArticleIndexes(readCatalog());
+  if (only === "all" || only === "locale-map") {
+    fs.writeFileSync(path.join(root, "src/lib/article-locale-map.json"), JSON.stringify(indexes.localeMap, null, 2) + "\n");
+  }
+  if (only === "all" || only === "search") {
+    fs.mkdirSync(path.join(root, "public/search"), { recursive: true });
+    for (const locale of locales) fs.writeFileSync(path.join(root, `public/search/poradna-${locale}.json`), JSON.stringify(indexes.searches[locale]));
+  }
+  if (only === "all" || only === "llms") fs.writeFileSync(path.join(root, "public/llms-articles.txt"), indexes.llms);
+  console.log(`Generated ${only} article indexes from published content only: ${locales.map((locale) => `${locale}=${indexes.searches[locale].length}`).join(", ")}`);
+}
+
+module.exports = { buildArticleIndexes };
+if (require.main === module) main();

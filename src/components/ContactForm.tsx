@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { legalPaths } from "@/lib/legal";
 import { resolveInquiryCategory, type InquiryCategoryId } from "@/lib/contact-inquiry";
@@ -13,6 +13,7 @@ import {
 import { useLocale, useTranslations } from "@/lib/i18n/locale-context";
 import { LocaleLink } from "@/lib/i18n/locale-link";
 import { company } from "@/lib/site";
+import { getAttachmentError } from "@/lib/attachment-validation";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -34,6 +35,8 @@ export function ContactForm({
   const [status, setStatus] = useState<Status>("idle");
   const [feedback, setFeedback] = useState("");
   const [contactChannelError, setContactChannelError] = useState(false);
+  const [attachmentError, setAttachmentError] = useState("");
+  const submitting = useRef(false);
   const [selectedServices, setSelectedServices] = useState<ContactServiceOption[]>(initialServices);
   const visibleServiceChoices = includeInitialContactServiceChoices(
     locale,
@@ -49,6 +52,7 @@ export function ContactForm({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submitting.current) return;
 
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -60,11 +64,22 @@ export function ContactForm({
       setContactChannelError(true);
       setStatus("error");
       setFeedback(t.contactRequired);
+      form.querySelector<HTMLInputElement>("#contact-email-input")?.focus();
       return;
     }
 
     setContactChannelError(false);
+    const files = formData.getAll("attachments").filter((entry): entry is File => typeof entry !== "string");
+    const uploadError = getAttachmentError(files);
+    setAttachmentError(uploadError ? t[uploadError] : "");
+    if (uploadError) {
+      setStatus("error");
+      setFeedback("");
+      form.querySelector<HTMLInputElement>("#contact-attachments-input")?.focus();
+      return;
+    }
 
+    submitting.current = true;
     setStatus("loading");
     setFeedback(t.sending);
 
@@ -94,7 +109,7 @@ export function ContactForm({
       const deadlineProvided = Boolean(String(formData.get("deadline") ?? "").trim());
       form.reset();
       setSelectedServices([]);
-      if (!isHoneypotSubmission) {
+      if (!isHoneypotSubmission && result.leadId) {
         sendGtagEvent("generate_lead", {
           form_id: "poptavkovy-formular",
           inquiry_category: categoryForEvent,
@@ -108,6 +123,8 @@ export function ContactForm({
     } catch {
       setStatus("error");
       setFeedback(sendFailureMessage);
+    } finally {
+      submitting.current = false;
     }
   }
 
@@ -127,7 +144,14 @@ export function ContactForm({
   }
 
   return (
-    <form id="poptavkovy-formular" className="contact-quick-form" onSubmit={handleSubmit}>
+    <form
+      id="poptavkovy-formular"
+      className="contact-quick-form"
+      method="post"
+      action="/api/contact/"
+      encType="multipart/form-data"
+      onSubmit={handleSubmit}
+    >
       <header className="contact-form-header">
         <h2 id="poptavka-heading" className="contact-form-title">
           {t.formTitle}
@@ -250,8 +274,19 @@ export function ContactForm({
               type="file"
               name="attachments"
               multiple
+              aria-invalid={Boolean(attachmentError) || undefined}
+              aria-describedby={attachmentError ? "contact-attachments-error" : undefined}
+              onChange={(event) => {
+                const error = getAttachmentError(Array.from(event.currentTarget.files ?? []));
+                setAttachmentError(error ? t[error] : "");
+              }}
               accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.zip,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,image/jpeg,image/png"
             />
+            {attachmentError ? (
+              <span id="contact-attachments-error" role="alert" className="contact-form-feedback contact-form-feedback-error">
+                {attachmentError}
+              </span>
+            ) : null}
           </p>
         </div>
       </div>

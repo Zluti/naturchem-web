@@ -299,6 +299,7 @@ main.contact-page + .site-footer {
 }
 
 .contact-form-feedback {
+  display: block;
   margin: 0.15rem 0 0;
   line-height: 1.5;
 }
@@ -552,6 +553,12 @@ main.contact-page + .site-footer {
 
   .contact-form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .contact-form-panel input:not([type="checkbox"]):not([type="radio"]),
+  .contact-form-panel select,
+  .contact-form-panel textarea {
+    font-size: 1rem;
   }
 
   .contact-form-message-field textarea {

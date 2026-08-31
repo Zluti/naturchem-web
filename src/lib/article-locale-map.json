@@ -4,6 +4,9 @@
     "en",
     "de"
   ],
+  "cena-odborneho-posudku-ovzdusi-rozptylove-studie-provozniho-radu": [
+    "cs"
+  ],
   "chladova-zatez-na-pracovisti": [
     "cs"
   ],
@@ -175,9 +178,6 @@
   "mereni-rozpoustedel-pracovniho-ovzdusi": [
     "cs"
   ],
-  "priprava-na-mereni-emisi": [
-    "cs"
-  ],
   "mereni-vibraci-pri-praci-ruce-cele-telo-kategorizace-praci": [
     "cs",
     "en",
@@ -227,9 +227,6 @@
     "cs",
     "en",
     "de"
-  ],
-  "cena-odborneho-posudku-ovzdusi-rozptylove-studie-provozniho-radu": [
-    "cs"
   ],
   "prach-na-pracovisti-celkovy-prach-respirabilni-frakce-a-oxid-kremicity": [
     "cs",
@@ -307,9 +304,6 @@
     "cs",
     "en",
     "de"
-  ],
-  "vyzva-khs-mereni-pracovniho-prostredi": [
-    "cs"
   ],
   "zalozni-dieselagregat-emise-hluk-a-povolovaci-podklady": [
     "cs",

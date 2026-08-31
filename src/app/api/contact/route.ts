@@ -1,13 +1,10 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { Buffer } from "node:buffer";
 import { randomUUID } from "node:crypto";
 import { Resend } from "resend";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
-import {
-  ALLOWED_ATTACHMENT_EXT,
-  ALLOWED_ATTACHMENT_MIME,
-  FORM_LIMITS
-} from "@/lib/form-validation-limits";
+import { FORM_LIMITS } from "@/lib/form-validation-limits";
+import { getAttachmentError } from "@/lib/attachment-validation";
 import { INQUIRY_CATEGORY_LABELS, isInquiryCategoryId } from "@/lib/contact-inquiry";
 import { INQUIRY_CATEGORY_LABELS as INQUIRY_CATEGORY_LABELS_EN } from "@/lib/contact-inquiry-en";
 import { INQUIRY_CATEGORY_LABELS as INQUIRY_CATEGORY_LABELS_DE } from "@/lib/contact-inquiry-de";
@@ -204,28 +201,9 @@ export async function POST(request: Request) {
     }
 
     const files = formData.getAll("attachments").filter(isUploadedFile);
-    if (files.length > FORM_LIMITS.maxAttachments) {
-      return NextResponse.json({ ok: false, message: msg.tooManyAttachments }, { status: 400 });
-    }
-
-    const invalidFile = files.find(
-      (file) =>
-        file.size > 0 &&
-        (!ALLOWED_ATTACHMENT_EXT.test(file.name) ||
-          (file.type !== "" &&
-            file.type !== "application/octet-stream" &&
-            !ALLOWED_ATTACHMENT_MIME.has(file.type)))
-    );
-    if (invalidFile) {
-      return NextResponse.json({ ok: false, message: msg.invalidAttachment }, { status: 400 });
-    }
-
-    const totalAttachmentBytes = files.reduce((total, file) => total + file.size, 0);
-    if (totalAttachmentBytes > FORM_LIMITS.maxAttachmentsTotalBytes) {
-      return NextResponse.json(
-        { ok: false, message: msg.attachmentsTooLarge },
-        { status: 400 }
-      );
+    const attachmentError = getAttachmentError(files);
+    if (attachmentError) {
+      return NextResponse.json({ ok: false, message: msg[attachmentError] }, { status: 400 });
     }
 
     const leadId = randomUUID();
@@ -335,18 +313,27 @@ export async function POST(request: Request) {
     const confirmationBody = msg.confirmationBody(confirmationFocus);
 
     if (email) {
-      const { error: confirmationError } = await resend.emails.send({
-        from: fromEmail,
-        to: email,
-        subject: msg.confirmationSubject,
-        text: confirmationBody,
-        html: `<pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;">${escapeHtml(
-          confirmationBody
-        )}</pre>`
-      });
-
-      if (confirmationError) {
-        console.error("[CONTACT_FORM_CONFIRMATION_ERROR]", confirmationError);
+      // The business inquiry has already been accepted. A slow or failed courtesy
+      // email must not delay success or make the visitor submit the inquiry twice.
+      try {
+        after(async () => {
+          try {
+            const { error: confirmationError } = await resend.emails.send({
+              from: fromEmail,
+              to: email,
+              subject: msg.confirmationSubject,
+              text: confirmationBody,
+              html: `<pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;">${escapeHtml(confirmationBody)}</pre>`
+            });
+            if (confirmationError) {
+              console.error("[CONTACT_FORM_CONFIRMATION_ERROR]", leadId);
+            }
+          } catch {
+            console.error("[CONTACT_FORM_CONFIRMATION_ERROR]", leadId);
+          }
+        });
+      } catch {
+        console.error("[CONTACT_FORM_CONFIRMATION_SCHEDULE_ERROR]", leadId);
       }
     }
 

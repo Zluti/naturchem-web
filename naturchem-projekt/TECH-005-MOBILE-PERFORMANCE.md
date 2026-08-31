@@ -4,6 +4,8 @@
 
 Připraveno lokálně 29. 8. 2026 na větvi `codex/mobile-performance-2026-08-27`. Dne 31. 8. 2026 uživatel výslovně schválil odeslání optimalizačních změn do `main` repozitáře `Ikaros277/naturchem-web`. Tento dokument zaznamenává předprodukční ověření; hash commitu a potvrzení produkčního nasazení budou uvedeny v předání releasu.
 
+Aktualizace 31. 8. 2026: commit `80e8d7d` je na `main` a Vercel potvrdil dokončení produkčního deploymentu v 08:53:38 SELČ. Tři nové mobilní PageSpeed běhy mají medián 95 a LCP 2,9 s (baseline 87 / 3,6 s); desktop zůstává na 100. Podrobná měření, omezení interpretace, Vercel usage a nově ověřené omezení Hobby pro komerční použití jsou v [POST-RELEASE-2026-08-31.md](POST-RELEASE-2026-08-31.md).
+
 ## Obchodní důvod a výchozí stav
 
 Rychlejší první zobrazení má snížit čekání před tím, než návštěvník pochopí nabídku a pokračuje ke službě nebo poptávce. Samotné skóre výkonu není úspěch; primární výsledek zůstává skutečný `generate_lead`.
@@ -82,7 +84,9 @@ Smoke test dnešního buildu našel 404 u `/poradna/mereni-rozpoustedel-pracovni
 
 Finální ověření po opravě: celé `npm run verify` prošlo (0 lint chyb, 16 stávajících upozornění, TypeScript, tři testovací sady a standardní Turbopack build 558 stránek). Opakovaný smoke test prošel pro 500 URL sitemap a 212 dalších interních odkazů bez jediného selhání; samostatný routing test rovněž bez selhání. Dnešní článek vrací HTTP 200, správný obsah a canonical. Homepage obsahuje oba správně omezené AVIF preloady. V hotových HTML souborech nebyly nalezeny metadata s `content="http://localhost:3000…"`, navzdory obecné buildové výstraze metadataBase.
 
-## Vyhodnocení po případném nasazení
+## Vyhodnocení po nasazení
+
+Nasazeno 31. 8. 2026 v produkčním commitu `80e8d7d`. Tři opakovaná produkční měření jsou dokončena: mobil 99 / 95 / 91 (medián 95, LCP 2,9 s), desktop třikrát 100 (medián LCP 0,5 s). Úplné metriky, odkazy a omezení interpretace jsou v `POST-RELEASE-2026-08-31.md`. Laboratorní ověření nenahrazuje obchodní vyhodnocení po 28/56 dnech (28. 9. / 26. 10. 2026).
 
 1. Třikrát zopakovat PageSpeed mobil i desktop a zapisovat medián LCP, CLS, TBT a přenesených dat.
 2. Ověřit produkční HTML, správný media-specific hero preload a absenci horizontálního přetečení na 390 px.

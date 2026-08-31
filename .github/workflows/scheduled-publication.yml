@@ -1,0 +1,38 @@
+name: Publish due articles
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Two checks per day, away from the busy top of the hour (UTC).
+    - cron: '23 5,13 * * *'
+
+permissions:
+  contents: read
+  statuses: read
+
+concurrency:
+  group: scheduled-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # Opt-in only after the initial release and explicit production approval.
+    if: github.repository == 'Ikaros277/naturchem-web' && github.ref == 'refs/heads/main' && vars.ENABLE_SCHEDULED_PUBLICATION == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run test:publication
+      - name: Deploy only newly due articles from the already approved revision
+        run: node scripts/scheduled_publication.js --deploy
+        env:
+          ENABLE_SCHEDULED_PUBLICATION: ${{ vars.ENABLE_SCHEDULED_PUBLICATION }}
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+          GITHUB_TOKEN: ${{ github.token }}

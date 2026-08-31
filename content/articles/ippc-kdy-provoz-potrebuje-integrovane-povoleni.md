@@ -162,7 +162,7 @@ Pošlete nám stručný popis provozu, technologické schéma, kapacity, situač
 
 Z podkladů ověříme, zda se na provoz může vztahovat IPPC a jaké kroky bude vhodné připravit. Posoudíme také, zda bude potřeba řešit EIA, změnu stávajících povolení, odborné podklady pro ovzduší, vodu, odpady, hluk nebo žádost o integrované povolení.
 
-Více k environmentálním službám najdete na stránce [Služby NATURCHEM](https://www.naturchem.cz/sluzby).
+Podklady pro nové povolení nebo jeho změnu najdete na stránce [IPPC a integrovaná povolení](/sluzby/ippc-integrovana-povoleni/).
 
 ## Krátké shrnutí
 
