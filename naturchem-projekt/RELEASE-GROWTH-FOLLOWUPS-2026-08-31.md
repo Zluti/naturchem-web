@@ -4,6 +4,8 @@ Stav: balík na `codex/growth-followups-2026-08-31`, výchozí commit `80e8d7dc3
 
 ## Co se mění a proč
 
+Aktualizace po následném schválení produkce: `fd26dca` byl 31. 8. 2026 sloučen do main a nasazen jedním produkčním deploymentem; Vercel dokončení 11:20:24 SELČ. Produkční kontrola 500 URL, 212 dalších odkazů a mobilního formuláře prošla. Podrobný aktuální stav: [DEPLOYMENT-FD26DCA-2026-08-31.md](DEPLOYMENT-FD26DCA-2026-08-31.md). Publikační automatika nebyla aktivována. Původní úvod tohoto dokumentu zaznamenává dřívější fázi schválení samotného commitu/pushe.
+
 ### Spolehlivější a čitelnější poptávkový formulář — DATA-005
 
 - Původně se nevyhovující přílohy odmítly teprve po přenosu na server. Nyní se jejich typ, počet a společná velikost kontrolují již v prohlížeči; server používá stejnou funkci. Stávající limity 5 souborů / 4 MiB se nezvyšují.
