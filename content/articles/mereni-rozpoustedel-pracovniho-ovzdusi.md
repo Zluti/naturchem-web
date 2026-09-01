@@ -3,11 +3,9 @@ title: Jak připravit zdroj na autorizované měření emisí, aby se měření 
   opakovat
 slug: priprava-na-mereni-emisi
 excerpt: >
-  Autorizované měření emisí může selhat kvůli zdánlivě drobným problémům: zdroj
-  neběží v reprezentativním režimu, měřicí místo není přístupné, filtr je po
-  poruše, chybí potřebné údaje nebo byl nesprávně ohlášen termín měření. Většinu
-  těchto situací lze odhalit před příjezdem měřicí skupiny. Přinášíme praktický
-  postup, jak zdroj a dokumentaci připravit.
+  Plánujete autorizované měření emisí? Připravte povolení, poslední protokol
+  a informace o provozu. Před termínem ověřte hlášení v ISPOP a přístup
+  k měřicímu místu.
 author: Ing. František Hezina
 status: published
 publishedAt: 2026-09-02
@@ -15,7 +13,7 @@ topic: Emise
 ---
 ## Nejdříve ověřte, co se má skutečně měřit
 
-Rozsah autorizovaného měření musí vycházet především z **platného povolení provozu**, příslušných ustanovení [zákona č. 201/2012 Sb., o ochraně ovzduší](https://www.zakonyprolidi.cz/cs/2012-201), a [vyhlášky č. 415/2012 Sb.](https://www.zakonyprolidi.cz/cs/2012-415).
+Rozsah autorizovaného měření musí vycházet především z **platného povolení provozu**, příslušných ustanovení [zákona č. 201/2012 Sb., o ochraně ovzduší](https://e-sbirka.gov.cz/sb/2012/201) a [vyhlášky č. 415/2012 Sb.](https://e-sbirka.gov.cz/sb/2012/415).
 
 Před objednáním měření doporučujeme zkontrolovat zejména:
 
@@ -33,13 +31,15 @@ Provozovatel musí termín ohlásit nejméně **5 pracovních dní před provede
 
 Pokud se termín z předem předvídatelného důvodu mění nebo ruší, musí být změna ohlášena nejméně **1 pracovní den před původně plánovaným termínem**.
 
+Při změně termínu nestačí přepsat původní hlášení. V ISPOP zrušte původní termín a podejte nové řádné hlášení. I pro nový termín dodržte předstih nejméně pěti pracovních dnů. Podrobnosti uvádí [FAQ ISPOP, bod 8.5](https://www.ispop.cz/casto-kladene-dotazy-faq/).
+
 Tuto administrativní část je vhodné řešit s měřicí laboratoří současně s potvrzením termínu. Chybějící nebo opožděné ohlášení může způsobit, že provedené měření nebude možné považovat za jednorázové měření podle zákona.
 
 ## Zdroj musí pracovat v reprezentativním režimu
 
 Měření má charakterizovat skutečné emise při běžném provozu zdroje. Vyhláška požaduje, aby bylo jednorázové měření **reprezentativní a průkazné**.
 
-U spalovacích zdrojů do 50 MW se měření provádí při stabilních provozních podmínkách a při reprezentativní a rovnoměrné zátěži. Do výsledků se nezahrnují hodnoty při najíždění a odstavování zařízení.
+U spalovacích stacionárních zdrojů s celkovým jmenovitým tepelným příkonem nižším než 50 MW se měření provádí při stabilních provozních podmínkách a při reprezentativní a rovnoměrné zátěži. Do výsledků se nezahrnují hodnoty při najíždění a odstavování zařízení.
 
 U technologických zdrojů musí být před měřením dohodnuto, jaký výrobní režim odpovídá reprezentativnímu provozu. U lakovny to může být běžná aplikace nátěrových hmot, u sušárny standardní výrobní vsázka, u galvanovny provoz příslušných lázní a u filtračního zařízení provoz technologie, která vytváří měřené emise.
 
@@ -51,11 +51,7 @@ Stejně problematické je plánovat měření na den, kdy není dostatek výrobk
 
 Jednorázové měření obvykle neznamená jeden krátký odečet.
 
-Vyhláška stanovuje například nejméně **3 jednotlivá měření u zdrojů s neměnnými provozními podmínkami** a nejméně **6 jednotlivých měření u zdrojů s proměnlivými provozními podmínkami**. U periodické, přerušované nebo šaržovité výroby musí měření vhodně postihnout celý výrobní cyklus nebo šarži.
-
-Konkrétní délka odběrů závisí na měřené látce, očekávané koncentraci a použité metodě.
-
-Provozovatel by proto měl předem vědět, zda dokáže udržet potřebný výrobní režim například jednu, tři nebo šest hodin. U některých měření může být potřebná ještě delší doba.
+U manuálních metod vyhláška stanovuje zpravidla nejméně tři jednotlivá měření při neměnných a šest při proměnlivých provozních podmínkách. Pro šaržovitou výrobu, jiné postupy a zvláštní případy platí další pravidla. Počet odběrů i potřebnou dobu provozu proto předem potvrďte s laboratoří.
 
 ## Měřicí místo je vhodné zkontrolovat předem
 
@@ -76,7 +72,7 @@ Měřicí technik potřebuje bezpečný přístup k odběrovým otvorům, dostat
 | Bezpečnost | Horké povrchy, pádová výška, pohyb technologie nebo jiné riziko |
 | Výduch | Neodpovídá výduchu uvedenému v povolení |
 
-U nového zdroje doporučujeme řešit měřicí místo už v projektové dokumentaci. Dodatečná výroba plošiny, přírub nebo úprava potrubí bývá podstatně dražší než jejich správné navržení před instalací technologie.
+U nového zdroje doporučujeme řešit měřicí místo už v projektové dokumentaci. Kontrola před termínem pomáhá odhalit komplikace ještě před výjezdem měřicí skupiny.
 
 ## Filtrace musí být ve standardním provozním stavu
 
@@ -134,7 +130,7 @@ Typické jsou situace, kdy zdroj během odběru opakovaně vypadává, není mo�
 
 Samostatným případem je **překročení emisního limitu**. Po odstranění příčiny může být nutné nové měření, kterým se doloží splnění podmínek provozu.
 
-Proto je levnější provést před termínem krátkou kontrolu dokumentace a technických podmínek než organizovat nový výjezd celé měřicí skupiny.
+Kontrola před termínem pomáhá odhalit komplikace ještě před výjezdem měřicí skupiny.
 
 ## Co doporučujeme poslat laboratoři předem
 
@@ -146,14 +142,12 @@ Pro přípravu autorizovaného měření nám můžete zaslat:
 - fotografie měřicího místa a informace o přístupu,
 - plánovaný výrobní režim v den měření a případné změny technologie od posledního měření.
 
-Podklady předem zkontrolujeme, určíme **zdroje, výduchy, měřené látky a potřebný provozní režim** a upozorníme na technické nebo administrativní problémy, které by mohly měření zkomplikovat.
-
-V případě potřeby můžeme před samotným měřením provést také kontrolu měřicího místa přímo v provozovně.
+Podklady s Vámi předem projdeme a upřesníme **zdroje, výduchy, měřené látky a potřebný provozní režim** pro objednávku měření. Fotografie měřicího místa nám pomohou včas upozornit na zjevné technické nebo administrativní komplikace.
 
 Více informací najdete na stránce [Autorizované měření emisí – NATURCHEM](https://www.naturchem.cz/sluzby/mereni-emisi/).
 
 ## Související právní předpisy
 
-[Zákon č. 201/2012 Sb., o ochraně ovzduší](https://www.zakonyprolidi.cz/cs/2012-201)
+[Zákon č. 201/2012 Sb., o ochraně ovzduší](https://e-sbirka.gov.cz/sb/2012/201)
 
-[Vyhláška č. 415/2012 Sb., o přípustné úrovni znečišťování a jejím zjišťování](https://www.zakonyprolidi.cz/cs/2012-415)
+[Vyhláška č. 415/2012 Sb., o přípustné úrovni znečišťování a jejím zjišťování](https://e-sbirka.gov.cz/sb/2012/415)

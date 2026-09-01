@@ -2,12 +2,8 @@
 title: "Přišla výzva KHS k měření pracovního prostředí: jak sestavit správný rozsah"
 slug: vyzva-khs-mereni-pracovniho-prostredi
 excerpt: >
-  Výzva krajské hygienické stanice k doložení měření pracovního prostředí
-  obvykle znamená, že je potřeba objektivizovat konkrétní rizikové faktory a
-  doložit expozici zaměstnanců při charakteristické směně. Před objednáním
-  měření je vhodné přesně určit pracovní pozice, operace, chemické látky, dobu
-  expozice a požadovaný účel výsledků. Správně připravený rozsah zabrání tomu,
-  že bude část měření chybět nebo se bude muset opakovat.
+  Přišla Vám výzva KHS k měření? Připravte výzvu, seznam pracovních pozic
+  a popis činností. Vysvětlíme, podle čeho se určuje rozsah měření.
 author: Ing. František Hezina
 status: published
 publishedAt: 2026-09-08
@@ -25,7 +21,7 @@ Důležitá je také lhůta uvedená ve výzvě. Pokud je rozsah požadavku neja
 
 ## Co může být předmětem měření
 
-Kategorizace prací vychází z [vyhlášky č. 432/2003 Sb.](https://www.zakonyprolidi.cz/cs/2003-432). Pracovní podmínky upravuje zejména [nařízení vlády č. 361/2007 Sb.](https://www.zakonyprolidi.cz/cs/2007-361) a pro hluk a vibrace [nařízení vlády č. 272/2011 Sb.](https://www.zakonyprolidi.cz/cs/2011-272).
+Kategorizace prací vychází z [vyhlášky č. 432/2003 Sb.](https://e-sbirka.gov.cz/sb/2003/432). Pracovní podmínky upravuje zejména [nařízení vlády č. 361/2007 Sb.](https://www.zakonyprolidi.cz/cs/2007-361) a pro hluk a vibrace [nařízení vlády č. 272/2011 Sb.](https://www.zakonyprolidi.cz/cs/2011-272).
 
 V běžném výrobním provozu se nejčastěji řeší:
 
@@ -69,16 +65,7 @@ Naopak není nutné vytvářet umělý extrém, který se při normálním provo
 
 Lakýrník může být současně exponován rozpouštědlům, hluku a fyzické zátěži. Brusič může být exponován hluku, vibracím přenášeným na ruce a prachu. Pracovník u pece může mít současně významnou tepelnou a fyzickou zátěž.
 
-Před objednáním je proto vhodné vytvořit jednoduchou matici:
-
-| Pracovní pozice | Hluk | Chemické látky | Prach | Vibrace | Teplo/chlad | Fyzická zátěž |
-|---|---:|---:|---:|---:|---:|---:|
-| Lakýrník | ✓ | ✓ | podle procesu | – | podle pracoviště | podle práce |
-| Brusič | ✓ | – | ✓ | ✓ | – | podle práce |
-| Montážní pracovník | ✓ | podle použitých látek | – | podle nářadí | – | ✓ |
-| Obsluha pece | ✓ | podle technologie | podle technologie | – | ✓ | ✓ |
-
-Takový přehled často odhalí chybějící faktor ještě před příjezdem laboratoře.
+Pro každou pozici sepište pracovní činnosti, jejich délku, používané stroje a chemické látky. Rozsah měření se určí podle skutečné práce a požadavku KHS.
 
 ## Chemické látky: pošlete bezpečnostní listy předem
 
@@ -88,7 +75,7 @@ Bezpečnostní list může obsahovat několik rozpouštědel, kyselin, kovů neb
 
 U lakování například nemusí být rozhodující pouze složka zastoupená nejvyšším procentem. Menšinová složka může mít výrazně přísnější PEL.
 
-Pro chemické látky se kategorizace provádí na základě koncentrací naměřených **v pracovním ovzduší v dýchací zóně zaměstnance**. U běžných chemických látek se práce zařazuje do druhé kategorie již při celosměnové koncentraci vyšší než **0,3 PEL**, i když samotný PEL ještě překročen není.
+Pro chemické látky se kategorizace provádí na základě koncentrací naměřených **v pracovním ovzduší v dýchací zóně zaměstnance**. Jedním z kritérií druhé kategorie je celosměnový průměr nad **0,3 PEL** při nepřekročení PEL ani nejvyšší přípustné koncentrace (NPK-P). U směsí a látek se zvláštní nebezpečností se uplatňují další pravidla; samotný poměr k PEL proto nestačí.
 
 Podrobněji tuto problematiku popisujeme v článku [Měření rozpouštědel a VOC v pracovním ovzduší: jak vybrat látky z bezpečnostních listů](/poradna/mereni-rozpoustedel-pracovniho-ovzdusi).
 
@@ -136,13 +123,13 @@ U faktorů fyzická zátěž a pracovní poloha umožňuje zákon v určitých p
 
 Protokol musí obsahovat mimo jiné charakter práce, místo a dobu jejího výkonu, směnnost, manipulovaný materiál, pracovní režim, používané nářadí a rotaci zaměstnanců mezi pracovními pozicemi.
 
-Při podezření na kategorii třetí nebo při dalších zákonem stanovených situacích může být potřeba skutečné měření.
+Odborné hodnocení podle tohoto postupu nelze použít k vyřazení práce z rizikových prací. Při uznání nemoci z povolání nebo ohrožení nemocí z povolání pro tyto faktory musí zaměstnavatel předložit pro dotčenou práci protokol z měření do šesti měsíců od uznání.
 
 Rozsah je proto vhodné určit předem podle konkrétních pracovních operací a účelu hodnocení.
 
 ## Může se všechno změřit během jednoho dne?
 
-Často ano, ale není to pravidlem.
+Některá měření lze spojit. Záleží na rozsahu, provozu a podmínkách měření.
 
 Hluk, vibrace, chemické látky a některé další faktory lze při dobře připraveném provozu koordinovat v jednom měřicím dni. U většího počtu pracovních pozic může být potřeba více směn.
 
@@ -152,7 +139,7 @@ Oddělený termín může vyžadovat zejména tepelná nebo chladová zátěž, 
 
 ## Měření pro kategorizaci musí splňovat zákonné požadavky
 
-Podle § 38 [zákona č. 258/2000 Sb.](https://www.zakonyprolidi.cz/cs/2000-258) může zaměstnavatel měření a vyšetření potřebná pro zařazení prací do druhé, třetí nebo čtvrté kategorie provést pouze prostřednictvím držitele příslušného **osvědčení o akreditaci nebo autorizace**, pokud je pro daný obor právními předpisy upravena.
+Podle § 38 [zákona č. 258/2000 Sb.](https://e-sbirka.gov.cz/sb/2000/258) může zaměstnavatel měření a vyšetření potřebná pro zařazení prací do druhé, třetí nebo čtvrté kategorie provést pouze prostřednictvím držitele příslušného **osvědčení o akreditaci nebo autorizace**, pokud je pro daný obor právními předpisy upravena.
 
 To je důležité při objednávání měření pouze podle nejnižší ceny. Výsledek musí být použitelný pro účel, pro který jej KHS požaduje.
 
@@ -176,7 +163,7 @@ Pro stanovení správného rozsahu nám můžete zaslat:
 - seznam pracovních pozic, počty zaměstnanců, délku směn, popis pracovních operací a fotografie pracovišť,
 - bezpečnostní listy používaných chemických látek, seznam strojů a nářadí a informace o odsávání, technologických zdrojích tepla nebo chladu.
 
-Výzvu nejprve projdeme a připravíme **matici pracovních pozic, rizikových faktorů a potřebných měření**. Zkontrolujeme, která měření lze spojit do jednoho termínu, která vyžadují specifický provozní nebo klimatický stav a jaké podklady bude potřeba následně předložit KHS.
+Výzvu a podklady s Vámi nejprve projdeme. Upřesníme **pracovní pozice, rizikové faktory a potřebná měření**, která může NATURCHEM zajistit, a upozorníme, kde je pro odborné hodnocení nebo měření potřeba držitel jiné příslušné autorizace. Současně určíme, která měření lze spojit do jednoho termínu a která vyžadují specifický provozní nebo klimatický stav.
 
 Tím lze předejít objednání zbytečných měření i situaci, kdy po předložení výsledků hygienická stanice požádá o doplnění dalšího faktoru nebo pracovní operace.
 
@@ -184,9 +171,9 @@ Více informací najdete na stránce [Měření pracovního prostředí – NATU
 
 ## Související právní předpisy
 
-[Zákon č. 258/2000 Sb., o ochraně veřejného zdraví](https://www.zakonyprolidi.cz/cs/2000-258)
+[Zákon č. 258/2000 Sb., o ochraně veřejného zdraví](https://e-sbirka.gov.cz/sb/2000/258)
 
-[Vyhláška č. 432/2003 Sb., o podmínkách pro zařazování prací do kategorií](https://www.zakonyprolidi.cz/cs/2003-432)
+[Vyhláška č. 432/2003 Sb., o podmínkách pro zařazování prací do kategorií](https://e-sbirka.gov.cz/sb/2003/432)
 
 [Nařízení vlády č. 361/2007 Sb., kterým se stanoví podmínky ochrany zdraví při práci](https://www.zakonyprolidi.cz/cs/2007-361)
 
