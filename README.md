@@ -37,7 +37,7 @@ Formular odesílá poptávky přes **Resend Node SDK** (`resend`) v `src/app/api
 3. V Resend **ověř doménu** `naturchem.cz` a jako odesílatele použij např. `naturchem@naturchem.cz`.
 4. **Redeploy** projektu (změny env se na starém buildu neprojeví).
 
-Bez `RESEND_API_KEY` formulář sice vrátí úspěch, ale e-mail se neodešle — do logu serveru se zapíše obsah (Vercel → Logs). Uživateli se zobrazí informace o neaktivní e-mailové službě.
+Bez `RESEND_API_KEY` nebo bez potvrzeného ID odeslání od Resendu vrátí formulář viditelnou chybu a událost `generate_lead` nevznikne. Po přijetí e-mailu poskytovatelem se do serverového logu zapíše pouze neosobní ID poptávky, ID zprávy a počet příjemců; obsah poptávky ani kontaktní údaje se nelogují.
 
 ## Redakcni system (zdarma, bez Sanity)
 

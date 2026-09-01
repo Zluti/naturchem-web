@@ -28,12 +28,13 @@ const apiMessages = {
     tooManyAttachments: "Můžete nahrát maximálně 5 příloh.",
     invalidAttachment: "Nepodporovaný typ souboru. Povolené formáty: PDF, Word, Excel, obrázek nebo ZIP.",
     confirmationSubject: "Potvrzení Vaší zprávy — NATURCHEM",
-    confirmationBody: (focus: string) =>
+    confirmationBody: (focus: string, leadId: string) =>
       [
         "Dobrý den,",
         "",
         "děkujeme za zprávu z webu NATURCHEM.",
         `Týká se oblasti: ${focus}.`,
+        `ID poptávky: ${leadId}`,
         "",
         "Ozveme se Vám s dalším postupem.",
         "Když bude potřeba něco doplnit, dáme vědět e-mailem nebo telefonicky.",
@@ -54,12 +55,13 @@ const apiMessages = {
     tooManyAttachments: "You can upload at most 5 attachments.",
     invalidAttachment: "Unsupported file type. Allowed: PDF, Word, Excel, image or ZIP.",
     confirmationSubject: "Confirmation of your message — NATURCHEM",
-    confirmationBody: (focus: string) =>
+    confirmationBody: (focus: string, leadId: string) =>
       [
         "Hello,",
         "",
         "thank you for your message from the NATURCHEM website.",
         `It concerns: ${focus}.`,
+        `Inquiry ID: ${leadId}`,
         "",
         "We will contact you with the next steps.",
         "If we need additional information, we will let you know by email or phone.",
@@ -80,12 +82,13 @@ const apiMessages = {
     tooManyAttachments: "Sie können höchstens 5 Anhänge hochladen.",
     invalidAttachment: "Nicht unterstützter Dateityp. Erlaubt: PDF, Word, Excel, Bild oder ZIP.",
     confirmationSubject: "Bestätigung Ihrer Nachricht — NATURCHEM",
-    confirmationBody: (focus: string) =>
+    confirmationBody: (focus: string, leadId: string) =>
       [
         "Guten Tag,",
         "",
         "vielen Dank für Ihre Nachricht über die NATURCHEM-Website.",
         `Sie betrifft den Bereich: ${focus}.`,
+        `Anfrage-ID: ${leadId}`,
         "",
         "Wir melden uns mit den nächsten Schritten bei Ihnen.",
         "Falls wir weitere Angaben benötigen, informieren wir Sie per E-Mail oder Telefon.",
@@ -262,7 +265,7 @@ export async function POST(request: Request) {
 
     const subjectService =
       detailedService !== "neuvedeno" ? detailedService : inquiryCategory;
-    const subjectRaw = `NATURCHEM poptávka: ${subjectService} - ${name}`;
+    const subjectRaw = `NATURCHEM poptávka [${leadId.slice(0, 8)}]: ${subjectService} - ${name}`;
     const subject =
       subjectRaw.length > MAX_SUBJECT_LEN
         ? `${subjectRaw.slice(0, MAX_SUBJECT_LEN - 1)}…`
@@ -276,7 +279,7 @@ export async function POST(request: Request) {
           }))
         : undefined;
 
-    const { error } = await resend.emails.send({
+    const { data: delivery, error } = await resend.emails.send({
       from: fromEmail,
       to: recipients,
       subject,
@@ -288,7 +291,7 @@ export async function POST(request: Request) {
       attachments: attachmentPayload
     });
 
-    if (error) {
+    if (error || !delivery?.id) {
       const errMsg =
         error && typeof error === "object" && "message" in error
           ? String((error as { message: string }).message)
@@ -308,9 +311,18 @@ export async function POST(request: Request) {
       );
     }
 
+    console.info(
+      "[CONTACT_FORM_ACCEPTED]",
+      JSON.stringify({
+        leadId,
+        providerMessageId: delivery.id,
+        recipientCount: recipients.length
+      })
+    );
+
     const confirmationFocus =
       detailedService !== "neuvedeno" ? detailedService : inquiryCategory;
-    const confirmationBody = msg.confirmationBody(confirmationFocus);
+    const confirmationBody = msg.confirmationBody(confirmationFocus, leadId);
 
     if (email) {
       // The business inquiry has already been accepted. A slow or failed courtesy

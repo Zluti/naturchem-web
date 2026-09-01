@@ -20,6 +20,7 @@ assert.equal(getAttachmentError([]), null);
 const nativeFetch = global.fetch;
 const NativeFormData = global.FormData;
 const originalError = console.error;
+const originalInfo = console.info;
 const envNames = ["RESEND_API_KEY", "CONTACT_FROM_EMAIL", "CONTACT_TO_EMAILS"];
 const originalEnv = Object.fromEntries(envNames.map((key) => [key, process.env[key]]));
 
@@ -74,6 +75,7 @@ async function main() {
   // The complete test is isolated from email providers, analytics and other networks.
   global.fetch = async () => { throw new Error("Network access is forbidden in this test"); };
   console.error = () => {};
+  console.info = () => {};
   process.env.RESEND_API_KEY = "test-only-not-a-real-key";
   process.env.CONTACT_FROM_EMAIL = "forms@example.invalid";
   process.env.CONTACT_TO_EMAILS = "office@example.invalid";
@@ -85,15 +87,19 @@ async function main() {
     const body = await result.json();
     assert.match(body.leadId, /^[\da-f-]{36}$/);
     assert.ok(fixture.emails[0].text.includes(`ID poptávky: ${body.leadId}`));
+    assert.ok(fixture.emails[0].subject.includes(body.leadId.slice(0, 8)));
     assert.ok(fixture.emails[0].text.includes("IPPC a integrovaná povolení"));
     assert.equal(fixture.emails.length, 1, "Response does not wait for the courtesy email");
     assert.equal(fixture.afterResponse.length, 1);
     await fixture.afterResponse[0]();
     assert.equal(fixture.emails.length, 2);
+    assert.ok(fixture.emails[1].text.includes(body.leadId));
   }
   for (const send of [
-    (_, count) => ({ error: count === 2 ? { name: "synthetic" } : null }),
-    (_, count) => { if (count === 2) throw new Error("Synthetic confirmation failure"); return { error: null }; }
+    (_, count) => count === 2
+      ? { data: null, error: { name: "synthetic" } }
+      : { data: { id: "accepted-primary-id" }, error: null },
+    (_, count) => { if (count === 2) throw new Error("Synthetic confirmation failure"); return { data: { id: "accepted-primary-id" }, error: null }; }
   ]) {
     const fixture = api({ send });
     const result = await fixture.submit(data());
@@ -103,7 +109,11 @@ async function main() {
   }
   const scheduling = api({ scheduleThrows: true });
   assert.equal((await scheduling.submit(data())).status, 200);
-  for (const send of [() => ({ error: { name: "synthetic" } }), () => { throw new Error("Synthetic internal send failure"); }]) {
+  for (const send of [
+    () => ({ data: null, error: { name: "synthetic" } }),
+    () => ({ data: null, error: null }),
+    () => { throw new Error("Synthetic internal send failure"); }
+  ]) {
     const fixture = api({ send });
     const result = await fixture.submit(data());
     assert.ok(result.status >= 500);
@@ -159,6 +169,7 @@ main().catch((error) => { originalError(error); process.exitCode = 1; }).finally
   global.fetch = nativeFetch;
   global.FormData = NativeFormData;
   console.error = originalError;
+  console.info = originalInfo;
   for (const key of envNames) {
     if (originalEnv[key] === undefined) delete process.env[key];
     else process.env[key] = originalEnv[key];
