@@ -27,6 +27,7 @@ const MEASUREMENT_SERVICES = new Set<ContactServiceOption>([
   "Měření osvětlení",
   "Měření vibrací",
   "Měření mikroklimatu",
+  "Měření tepelné a chladové zátěže",
   "Kolaudační měření",
   "Měření nové haly"
 ]);

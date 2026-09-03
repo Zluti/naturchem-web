@@ -23,6 +23,8 @@ U technologicky chlazeného pracoviště může být teplota záměrně nižší
 
 Nařízení vlády připouští expozici chladu na takovém nevenkovním pracovišti při práci odpovídající energetickému výdeji **106 W/m² a vyššímu**, tedy od třídy práce IIb.
 
+**Řešíte chladovou zátěž kvůli KHS nebo kategorizaci práce?** Pošlete nám popis pracoviště, pracovní operace, dobu pobytu a případný požadavek KHS. [Poslat podklady k návrhu měření](/kontakt?service=M%C4%9B%C5%99en%C3%AD%20tepeln%C3%A9%20a%20chladov%C3%A9%20z%C3%A1t%C4%9B%C5%BEe#poptavkovy-formular)
+
 ## Chladírna, mrazírna a nevytápěná hala se hodnotí rozdílně
 
 V chladírně nebo mrazírně je nízká teplota technologickým požadavkem. Zaměstnavatel proto musí nastavit ochranný režim podle skutečné teploty a délky pobytu zaměstnance.

@@ -689,7 +689,7 @@ export const dedicatedServicePagesEn: Record<string, DedicatedServicePage> = {
       "Autorisierte Messung von Wärme- und Kältebelastung am Arbeitsplatz: mikroklimatische Parameter, Arbeitsklasse und zulässige Arbeitszeiten. Unterlagen für Hygienestation und Berufseinstufung.",
     intro:
       "Fordert die **Hygienestation** eine Beurteilung der **Wärme- oder Kältebelastung**? Wir messen mikroklimatische Parameter im realen Betrieb — Bericht mit **Arbeitsklasse** und Empfehlungen zu zulässigen Arbeitszeiten.",
-    contactService: "Měření pracovního prostředí",
+    contactService: "Měření tepelné a chladové zátěže",
     faqCategoryId: "pracovni-prostredi",
     scope: [
       "Wir messen mikroklimatische Parameter nach der Methodik des tschechischen Gesundheitsministeriums",

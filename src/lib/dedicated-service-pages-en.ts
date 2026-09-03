@@ -689,7 +689,7 @@ export const dedicatedServicePagesEn: Record<string, DedicatedServicePage> = {
       "Authorised measurement of heat and cold stress at workplaces: microclimatic parameters, work class and permissible exposure times. Documentation for regional hygiene station and job categorisation.",
     intro:
       "Does the **regional hygiene station** require assessment of **heat or cold stress**? We measure microclimatic parameters in actual operation — report with **work class** and permissible exposure time recommendations.",
-    contactService: "Měření pracovního prostředí",
+    contactService: "Měření tepelné a chladové zátěže",
     faqCategoryId: "pracovni-prostredi",
     scope: [
       "We measure microclimatic parameters according to Czech Ministry of Health methodology",

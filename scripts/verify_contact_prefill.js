@@ -114,6 +114,28 @@ assert.equal(
   "UVP und Absichtserklärung"
 );
 
+const coldStress = readContactUrlPrefill(
+  "?service=M%C4%9B%C5%99en%C3%AD%20tepeln%C3%A9%20a%20chladov%C3%A9%20z%C3%A1t%C4%9B%C5%BEe"
+);
+assert.deepEqual(coldStress.initialServices, ["Měření tepelné a chladové zátěže"]);
+assert.equal(coldStress.initialCategory, "mereni");
+assert.equal(
+  includeInitialContactServiceChoices(
+    "en",
+    getPriorityContactServiceChoices("en"),
+    coldStress.initialServices
+  )[0].label,
+  "Heat and cold stress measurement"
+);
+assert.equal(
+  includeInitialContactServiceChoices(
+    "de",
+    getPriorityContactServiceChoices("de"),
+    coldStress.initialServices
+  )[0].label,
+  "Messung von Wärme- und Kältebelastung"
+);
+
 const productMessage = "Poptávka přístroje: FID detektor";
 const productUrl = contactCategoryUrl("pristroj", productMessage);
 const parsedProductUrl = new URL(productUrl, "https://www.naturchem.cz");

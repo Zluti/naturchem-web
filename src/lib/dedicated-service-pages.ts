@@ -708,7 +708,7 @@ export const dedicatedServicePages: Record<string, DedicatedServicePage> = {
       "Autorizované měření tepelné a chladové zátěže na pracovištích: mikroklimatické parametry, třída práce a přípustné doby. Podklady pro KHS a kategorizaci prací.",
     intro:
       "**KHS** požaduje posouzení **tepelné nebo chladové zátěže**? Změříme mikroklimatické parametry v reálném provozu — protokol s doporučením **třídy práce** a přípustných dob.",
-    contactService: "Měření pracovního prostředí",
+    contactService: "Měření tepelné a chladové zátěže",
     faqCategoryId: "pracovni-prostredi",
     scope: [
       "Změříme mikroklimatické parametry podle metodického návodu MZ ČR",
