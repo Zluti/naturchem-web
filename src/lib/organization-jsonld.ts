@@ -35,6 +35,7 @@ export function buildOrganizationJsonLd(
     "@id": `${siteUrl}/#organization`,
     name: company.name,
     alternateName: "NATURCHEM",
+    vatID: company.dic,
     url: localizedCanonical("/", locale),
     logo: `${siteUrl}/graphics/naturchem-mark.svg`,
     image: `${siteUrl}/opengraph-image`,

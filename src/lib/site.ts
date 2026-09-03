@@ -10,8 +10,8 @@ export const company = {
   whatsapp: "+420 736 778 391",
   web: "www.naturchem.cz",
   person: "Ing. František Hezina",
-  /** Public profile URLs for schema.org sameAs — fill when available. */
-  socialProfiles: [] as string[],
+  /** External profiles that unambiguously identify NATURCHEM for schema.org sameAs. */
+  socialProfiles: ["https://www.cai.cz/?subjekt=1599-naturchem-s-r-o"] as string[],
   address: {
     street: "Ledečská 3015",
     city: "Havlíčkův Brod",
