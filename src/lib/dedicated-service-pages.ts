@@ -21,11 +21,12 @@
 export const dedicatedServicePages: Record<string, DedicatedServicePage> = {
   "hlukove-studie": {
     slug: "sluzby/hlukove-studie",
-    title: "Hlukové studie",
+    title: "Hluková studie pro KHS, stavby a technologie",
     description:
-      "Hlukové studie pro technologie, areály, dopravu, VZT, tepelná čerpadla a stavební záměry. Podklady pro KHS, stavební řízení a EIA.",
+      "Hluková studie pro nové technologie, VZT, tepelná čerpadla, areály a dopravu. Podklad pro KHS, stavební řízení a EIA; nabídka podle podkladů.",
     intro:
-      "Úřad požaduje **hlukovou studii** nebo řešíte stížnost okolí? Zpracujeme výpočet technologií, areálu a dopravy — podklad pro **KHS**, stavební řízení i **EIA**.",
+      "Potřebujete **hlukovou studii** pro KHS nebo před instalací technologie? Zmodelujeme hluk areálu, dopravy, VZT či tepelného čerpadla a navrhneme další postup.",
+    scopeHeading: "Co hluková studie vyřeší",
     contactService: "Hlukové studie",
     faqCategoryId: "hluk",
     scope: [

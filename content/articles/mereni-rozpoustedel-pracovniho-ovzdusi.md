@@ -144,7 +144,7 @@ Pro přípravu autorizovaného měření nám můžete zaslat:
 
 Podklady s Vámi předem projdeme a upřesníme **zdroje, výduchy, měřené látky a potřebný provozní režim** pro objednávku měření. Fotografie měřicího místa nám pomohou včas upozornit na zjevné technické nebo administrativní komplikace.
 
-Více informací najdete na stránce [Autorizované měření emisí – NATURCHEM](https://www.naturchem.cz/sluzby/mereni-emisi/).
+Více informací najdete na stránce [Autorizované měření emisí – NATURCHEM](https://www.naturchem.cz/autorizovana-osoba-mereni-emisi/).
 
 ## Související právní předpisy
 

@@ -142,4 +142,4 @@ Měření emisí je potřeba zejména tehdy, když vyplývá ze zákona, vyhlá�
 
 Ne vždy je ale samotné měření prvním krokem. U nových záměrů, změn provozu, nejasných požadavků úřadu nebo problematických měřicích míst je často vhodné nejprve prověřit dokumentaci, povolení provozu a technický stav zdroje.
 
-**Pošlete nám rozhodnutí, povolení provozu nebo požadavek úřadu a ověříme, zda máte povinnost měření emisí, nebo zda je vhodnější nejprve připravit jiný odborný podklad.**
+**Pošlete nám rozhodnutí, povolení provozu nebo požadavek úřadu a ověříme, zda máte povinnost [autorizovaného měření emisí](/autorizovana-osoba-mereni-emisi), nebo zda je vhodnější nejprve připravit jiný odborný podklad.**

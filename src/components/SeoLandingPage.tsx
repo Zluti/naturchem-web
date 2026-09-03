@@ -195,6 +195,41 @@ export async function SeoLandingPage({ landing, locale }: Props) {
           </section>
         ) : null}
 
+        {landing.sources?.length ? (
+          <section
+            className="section seo-demand-sources"
+            aria-labelledby="seo-demand-sources-heading"
+          >
+            <div className="container">
+              <header className="seo-demand-section-header">
+                {landing.sourcesEyebrow ? <p className="eyebrow">{landing.sourcesEyebrow}</p> : null}
+                <h2 id="seo-demand-sources-heading">{landing.sourcesHeading}</h2>
+              </header>
+              <ul className="seo-demand-related-list">
+                {landing.sources.map((source) => (
+                  <li key={source.href}>
+                    <a
+                      href={source.href}
+                      className="seo-demand-related-row"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <ServiceIcon icon="process-posouzeni" variant="inline" />
+                      <span className="seo-demand-related-copy">
+                        <strong>{source.label}</strong>
+                        <small>{source.description}</small>
+                      </span>
+                      <span className="seo-demand-related-arrow" aria-hidden="true">
+                        ↗
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        ) : null}
+
         <div className="container seo-demand-cta-wrap">
           <PageCtaStrip
             text={copy.ctaText}

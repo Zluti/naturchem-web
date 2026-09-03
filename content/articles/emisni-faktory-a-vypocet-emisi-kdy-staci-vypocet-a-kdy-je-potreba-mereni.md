@@ -117,7 +117,7 @@ Z podkladů ověříme, zda je pro daný účel možné použít výpočet, jak�
 
 Výpočet emisí je vhodný nástroj pro SPE, poplatky, bilance, rozptylové studie nebo předběžné posouzení změny provozu. Musí ale vycházet ze správných vstupních údajů, vhodného emisního faktoru nebo bilance a musí být zpětně doložitelný.
 
-Autorizované měření emisí je potřeba tehdy, pokud ho stanoví zákon, vyhláška, povolení provozu nebo úřad, případně pokud je nutné prokázat skutečné plnění emisního limitu. Výpočet a měření proto nejsou zaměnitelné podklady. Každý má jiný účel a jinou průkaznost.
+[Autorizované měření emisí](/autorizovana-osoba-mereni-emisi) je potřeba tehdy, pokud ho stanoví zákon, vyhláška, povolení provozu nebo úřad, případně pokud je nutné prokázat skutečné plnění emisního limitu. Výpočet a měření proto nejsou zaměnitelné podklady. Každý má jiný účel a jinou průkaznost.
 
 ## Věcná opora článku
 

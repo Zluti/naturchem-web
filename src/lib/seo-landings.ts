@@ -18,6 +18,9 @@
   overviewHeading?: string;
   highlights?: string[];
   heroTheme?: string;
+  sourcesHeading?: string;
+  sourcesEyebrow?: string;
+  sources?: { href: string; label: string; description: string }[];
 };
 
 export const seoLandings: SeoLanding[] = [
@@ -289,22 +292,102 @@ export const seoLandings: SeoLanding[] = [
   },
   {
     slug: "autorizovana-osoba-mereni-emisi",
-    title: "Autorizovaná osoba pro měření emisí v ČR",
+    title: "Autorizované měření emisí stacionárních zdrojů",
     metaDescription:
-      "Jednorázové měření emisí může provádět jen autorizovaná osoba. NATURCHEM — akreditovaná laboratoř č. 1599 s autorizací pro emise.",
-    h1: "Autorizovaná osoba pro měření emisí",
+      "Autorizované měření emisí kotelen, lakoven a technologií. NATURCHEM, akreditovaná laboratoř č. 1599: příprava, protokol a data pro ISPOP.",
+    h1: "Autorizované měření emisí",
     intro:
-      "NATURCHEM je akreditovaná laboratoř č. 1599 a autorizovaná osoba pro jednorázové měření emisí, rozptylové studie a odborné posudky podle zákona o ochraně ovzduší.",
+      "NATURCHEM provádí autorizované jednorázové měření emisí ze stacionárních zdrojů. Zkontrolujeme podklady, změříme zdroj v reprezentativním provozu a předáme akreditovaný protokol.",
     sections: [
       {
+        heading: "Pošlete povolení a poslední protokol",
         paragraphs: [
-          "Při výběru dodavatele ověřte rozsah autorizace, akreditované metody a zkušenost s vaším typem zdroje — kotelna, lakovna, bioplyn, výduch technologie.",
-          "Zajistíme kompletní protokol, oznámení termínu v ISPOP a podklady pro úřad."
+          "Z povolení ověříme zdroje, výduchy, měřené látky a četnost. Přiložte technický popis, změny technologie, fotografie měřicího místa a plánovaný provozní režim."
+        ]
+      },
+      {
+        heading: "Připravíme měření pro skutečný provoz",
+        paragraphs: [
+          "Před termínem sladíme rozsah, přístup k výduchu a reprezentativní režim zdroje. Provozovatel oznamuje termín v ISPOP nejméně 5 pracovních dní před měřením."
+        ]
+      },
+      {
+        heading: "Předáme protokol a ohlásíme data",
+        paragraphs: [
+          "Jednorázové měření může provést pouze autorizovaná osoba. Vyhotovíme protokol a data z měření oznámíme prostřednictvím ISPOP do 60 dnů."
         ]
       }
     ],
     serviceHref: "/sluzby/mereni-emisi",
-    contactService: "Měření emisí"
+    contactService: "Měření emisí",
+    internalLinkPriority: 110,
+    layout: "demand",
+    eyebrow: "Ochrana ovzduší",
+    overviewHeading: "Od podkladů k použitelnému protokolu",
+    highlights: [
+      "Akreditovaná laboratoř č. 1599",
+      "Kotelny, lakovny a technologie",
+      "Protokol a data pro ISPOP"
+    ],
+    heroTheme: "mereni-emisi",
+    relatedLinks: [
+      {
+        href: "/sluzby/mereni-emisi",
+        label: "Měření emisí podle typu zdroje",
+        description: "Rozsah měření, podklady, výstupy a příklady provozů."
+      },
+      {
+        href: "/poradna/priprava-na-mereni-emisi",
+        label: "Jak připravit zdroj před měřením",
+        description: "Praktická kontrola povolení, režimu zdroje a měřicího místa."
+      },
+      {
+        href: "/akreditace-autorizace-dokumenty",
+        label: "Akreditace, autorizace a dokumenty",
+        description: "Osvědčení laboratoře a přehled odborných oprávnění."
+      }
+    ],
+    faq: [
+      {
+        question: "Kdo smí provést jednorázové měření emisí?",
+        answer:
+          "Jednorázové měření emisí podle zákona o ochraně ovzduší může provést pouze autorizovaná osoba. Před objednáním je vhodné ověřit také akreditovaný rozsah použitých metod."
+      },
+      {
+        question: "Co potřebujete pro nabídku a přípravu měření?",
+        answer:
+          "Pošlete platné povolení provozu, poslední protokol, technický popis zdroje a výduchů, informace o změnách technologie a plánovaném provozním režimu. Pomohou také fotografie měřicího místa."
+      },
+      {
+        question: "Kdo oznamuje termín a data do ISPOP?",
+        answer:
+          "Provozovatel oznamuje termín nejméně 5 pracovních dní před měřením. Autorizovaná osoba vyhotoví protokol a data z měření oznámí prostřednictvím ISPOP do 60 dnů."
+      },
+      {
+        question: "Jaký je rozdíl mezi autorizací a akreditací?",
+        answer:
+          "Autorizace opravňuje osobu provádět zákonem vymezené činnosti. Akreditace potvrzuje odbornou způsobilost laboratoře pro konkrétní metody a rozsah zkoušek."
+      }
+    ],
+    sourcesEyebrow: "Ověřené informace",
+    sourcesHeading: "Právní a metodické zdroje",
+    sources: [
+      {
+        href: "https://e-sbirka.gov.cz/sb/2012/201",
+        label: "Zákon č. 201/2012 Sb., o ochraně ovzduší",
+        description: "Aktuální znění zákona v e-Sbírce, zejména pravidla jednorázového měření emisí."
+      },
+      {
+        href: "https://e-sbirka.gov.cz/sb/2012/415",
+        label: "Vyhláška č. 415/2012 Sb.",
+        description: "Požadavky na zjišťování úrovně znečišťování a provedení měření."
+      },
+      {
+        href: "https://www.ispop.cz/nasazeni-formularu-jednorazoveho-mereni-emisi-f_ovz_term_jme-a-f_ovz_jme/",
+        label: "ISPOP: formuláře pro jednorázové měření emisí",
+        description: "Oficiální informace k oznámení termínu a dat z protokolu."
+      }
+    ]
   },
   {
     slug: "mereni-prasnosti",
