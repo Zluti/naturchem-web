@@ -147,6 +147,10 @@ export const privacyPageContent = {
         { name: "Vercel Inc.", description: "hosting webu a technický provoz (USA)" },
         { name: "Resend Inc.", description: "odesílání e-mailů z kontaktního formuláře (USA)" },
         {
+          name: "Cloudflare, Inc.",
+          description: "bezpečnostní ověření kontaktního formuláře pomocí Turnstile (USA)"
+        },
+        {
           name: "Google Ireland Limited / Google LLC",
           description: "Google Analytics, Google Ads, Google Search Console (EU/USA)"
         },

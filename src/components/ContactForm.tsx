@@ -14,6 +14,7 @@ import { useLocale, useTranslations } from "@/lib/i18n/locale-context";
 import { LocaleLink } from "@/lib/i18n/locale-link";
 import { company } from "@/lib/site";
 import { getAttachmentError } from "@/lib/attachment-validation";
+import { TurnstileField } from "@/components/TurnstileField";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -36,6 +37,7 @@ export function ContactForm({
   const [feedback, setFeedback] = useState("");
   const [contactChannelError, setContactChannelError] = useState(false);
   const [attachmentError, setAttachmentError] = useState("");
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
   const submitting = useRef(false);
   const [selectedServices, setSelectedServices] = useState<ContactServiceOption[]>(initialServices);
   const visibleServiceChoices = includeInitialContactServiceChoices(
@@ -45,6 +47,7 @@ export function ContactForm({
   );
   const inquiryCategory =
     selectedServices.length > 0 ? resolveInquiryCategory(selectedServices) : initialCategory;
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim();
 
   const sendFailureMessage = t.sendFailure
     .replace("{email}", company.email)
@@ -98,6 +101,7 @@ export function ContactForm({
       if (!response.ok || !result.ok) {
         setStatus("error");
         setFeedback(result.message || sendFailureMessage);
+        if (turnstileSiteKey) setTurnstileResetKey((current) => current + 1);
         return;
       }
 
@@ -123,6 +127,7 @@ export function ContactForm({
     } catch {
       setStatus("error");
       setFeedback(sendFailureMessage);
+      if (turnstileSiteKey) setTurnstileResetKey((current) => current + 1);
     } finally {
       submitting.current = false;
     }
@@ -333,6 +338,23 @@ export function ContactForm({
           </span>
         </label>
       </p>
+
+      {turnstileSiteKey ? (
+        <>
+          <TurnstileField
+            key={turnstileResetKey}
+            siteKey={turnstileSiteKey}
+            locale={locale}
+          />
+          <noscript>
+            <p className="contact-form-feedback contact-form-feedback-error">
+              {t.fallbackIntro} <a href={`mailto:${company.email}`}>{company.email}</a>{" "}
+              {t.fallbackOr} <a href={`tel:${company.phones[0].replace(/\s+/g, "")}`}>{company.phones[0]}</a>{" "}
+              {t.fallbackSuffix}
+            </p>
+          </noscript>
+        </>
+      ) : null}
 
       <button type="submit" className="button contact-form-submit" disabled={status === "loading"}>
         {status === "loading" ? t.submitting : t.submit}

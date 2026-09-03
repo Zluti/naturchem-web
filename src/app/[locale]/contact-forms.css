@@ -587,3 +587,9 @@ main.contact-page + .site-footer {
 .contact-service-option a {
   font-weight: 650;
 }
+
+.contact-form-turnstile {
+  width: min(100%, 20rem);
+  min-height: 1px;
+  overflow: hidden;
+}

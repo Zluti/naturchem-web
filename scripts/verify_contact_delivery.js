@@ -21,7 +21,14 @@ const nativeFetch = global.fetch;
 const NativeFormData = global.FormData;
 const originalError = console.error;
 const originalInfo = console.info;
-const envNames = ["RESEND_API_KEY", "CONTACT_FROM_EMAIL", "CONTACT_TO_EMAILS"];
+const originalWarn = console.warn;
+const envNames = [
+  "RESEND_API_KEY",
+  "CONTACT_FROM_EMAIL",
+  "CONTACT_TO_EMAILS",
+  "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+  "TURNSTILE_SECRET_KEY"
+];
 const originalEnv = Object.fromEntries(envNames.map((key) => [key, process.env[key]]));
 
 function data(overrides = {}) {
@@ -76,9 +83,12 @@ async function main() {
   global.fetch = async () => { throw new Error("Network access is forbidden in this test"); };
   console.error = () => {};
   console.info = () => {};
+  console.warn = () => {};
   process.env.RESEND_API_KEY = "test-only-not-a-real-key";
   process.env.CONTACT_FROM_EMAIL = "forms@example.invalid";
   process.env.CONTACT_TO_EMAILS = "office@example.invalid";
+  delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  delete process.env.TURNSTILE_SECRET_KEY;
 
   for (const locale of ["cs", "en", "de"]) {
     const fixture = api();
@@ -95,6 +105,62 @@ async function main() {
     assert.equal(fixture.emails.length, 2);
     assert.ok(fixture.emails[1].text.includes(body.leadId));
   }
+
+  process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = "test-site-key";
+  delete process.env.TURNSTILE_SECRET_KEY;
+  const incompleteTurnstile = api();
+  assert.equal((await incompleteTurnstile.submit(data())).status, 500);
+  assert.equal(incompleteTurnstile.emails.length, 0);
+
+  process.env.TURNSTILE_SECRET_KEY = "test-secret-key";
+  const missingTurnstile = api();
+  assert.equal((await missingTurnstile.submit(data())).status, 400);
+  assert.equal(missingTurnstile.emails.length, 0);
+
+  global.fetch = async (url, options) => {
+    assert.equal(String(url), "https://challenges.cloudflare.com/turnstile/v0/siteverify");
+    assert.equal(options.method, "POST");
+    assert.equal(String(options.body.get("secret")), "test-secret-key");
+    assert.equal(String(options.body.get("response")), "valid-test-token");
+    return Response.json({ success: true, action: "contact", hostname: "example.invalid" });
+  };
+  const protectedTurnstile = api();
+  assert.equal(
+    (await protectedTurnstile.submit(data({ "cf-turnstile-response": "valid-test-token" }))).status,
+    200
+  );
+  assert.equal(protectedTurnstile.emails.length, 1);
+
+  global.fetch = async () =>
+    Response.json({ success: true, action: "different-form", hostname: "example.invalid" });
+  const wrongTurnstileAction = api();
+  assert.equal(
+    (await wrongTurnstileAction.submit(data({ "cf-turnstile-response": "wrong-action-token" }))).status,
+    400
+  );
+  assert.equal(wrongTurnstileAction.emails.length, 0);
+
+  global.fetch = async () =>
+    Response.json({ success: true, action: "contact", hostname: "attacker.invalid" });
+  const wrongTurnstileHostname = api();
+  assert.equal(
+    (await wrongTurnstileHostname.submit(data({ "cf-turnstile-response": "wrong-host-token" }))).status,
+    400
+  );
+  assert.equal(wrongTurnstileHostname.emails.length, 0);
+
+  global.fetch = async () =>
+    Response.json({ success: false, "error-codes": ["invalid-input-response"] });
+  const invalidTurnstile = api();
+  assert.equal(
+    (await invalidTurnstile.submit(data({ "cf-turnstile-response": "invalid-test-token" }))).status,
+    400
+  );
+  assert.equal(invalidTurnstile.emails.length, 0);
+
+  delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  delete process.env.TURNSTILE_SECRET_KEY;
+  global.fetch = async () => { throw new Error("Network access is forbidden in this test"); };
   for (const send of [
     (_, count) => count === 2
       ? { data: null, error: { name: "synthetic" } }
@@ -162,7 +228,7 @@ async function main() {
   const failed = client(data(), () => Response.json({ ok: false, message: "Synthetic failure" }, { status: 502 }));
   await failed.submit();
   assert.equal(failed.events.length, 0);
-  console.log("PASS contact delivery: shared upload limits, no-upload validation, double-submit guard, CS/EN/DE, async confirmations, failure isolation, lead identity and spam exclusion");
+  console.log("PASS contact delivery: upload limits, double-submit guard, CS/EN/DE, Turnstile action and hostname validation, async confirmations, failure isolation, lead identity and spam exclusion");
 }
 
 main().catch((error) => { originalError(error); process.exitCode = 1; }).finally(() => {
@@ -170,6 +236,7 @@ main().catch((error) => { originalError(error); process.exitCode = 1; }).finally
   global.FormData = NativeFormData;
   console.error = originalError;
   console.info = originalInfo;
+  console.warn = originalWarn;
   for (const key of envNames) {
     if (originalEnv[key] === undefined) delete process.env[key];
     else process.env[key] = originalEnv[key];

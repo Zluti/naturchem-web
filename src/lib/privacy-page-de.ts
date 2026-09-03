@@ -145,7 +145,11 @@ export const privacyPageContent = {
       intro: "Personenbezogene Daten können an folgende Kategorien von Empfängern weitergegeben werden:",
       items: [
         { name: "Vercel Inc.", description: "Website-Hosting und technischer Betrieb (USA)" },
-        { name: "Erneut senden Inc.", description: "Versenden von E-Mails über das Kontaktformular (USA)" },
+        { name: "Resend Inc.", description: "Versenden von E-Mails über das Kontaktformular (USA)" },
+        {
+          name: "Cloudflare, Inc.",
+          description: "Sicherheitsprüfung des Kontaktformulars mit Turnstile (USA)"
+        },
         {
           name: "Google Ireland Limited / Google LLC",
           description: "Google Analytics, Google Ads, Google Search Console (EU/USA)"

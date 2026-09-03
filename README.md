@@ -39,6 +39,17 @@ Formular odesílá poptávky přes **Resend Node SDK** (`resend`) v `src/app/api
 
 Bez `RESEND_API_KEY` nebo bez potvrzeného ID odeslání od Resendu vrátí formulář viditelnou chybu a událost `generate_lead` nevznikne. Po přijetí e-mailu poskytovatelem se do serverového logu zapíše pouze neosobní ID poptávky, ID zprávy a počet příjemců; obsah poptávky ani kontaktní údaje se nelogují.
 
+### Ochrana proti automatizovanému spamu
+
+Kontaktní formulář podporuje Cloudflare Turnstile bez vizuálního CAPTCHA při běžném průchodu. V Cloudflare vytvoř widget pro `naturchem.cz` a na Vercelu nastav současně:
+
+```env
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET_KEY=
+```
+
+Klientský token se povinně ověřuje serverovým Siteverify API s akcí `contact` a hostname aktuálního webu; token je jednorázový a po chybě formulář načte nový widget. Pokud je nastaven jen jeden klíč, API záměrně vrátí konfigurační chybu. Pokud nejsou nastavené oba, ochrana zůstane vypnutá a formulář zachová dosavadní chování. Produkční klíče neukládej do repozitáře.
+
 ## Redakcni system (zdarma, bez Sanity)
 
 Web pouziva Markdown clanky ulozene primo v repozitari ve slozce `content/articles`.

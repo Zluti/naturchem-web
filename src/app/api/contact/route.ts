@@ -11,6 +11,7 @@ import { INQUIRY_CATEGORY_LABELS as INQUIRY_CATEGORY_LABELS_DE } from "@/lib/con
 import { isValidContactService } from "@/lib/contact-services";
 import type { Locale } from "@/lib/i18n/locales";
 import { company } from "@/lib/site";
+import { verifyTurnstileToken } from "@/lib/turnstile";
 
 const MAX_SUBJECT_LEN = 200;
 
@@ -27,6 +28,10 @@ const apiMessages = {
     fieldTooLong: "Jedno z polí je příliš dlouhé. Zkuste text zkrátit.",
     tooManyAttachments: "Můžete nahrát maximálně 5 příloh.",
     invalidAttachment: "Nepodporovaný typ souboru. Povolené formáty: PDF, Word, Excel, obrázek nebo ZIP.",
+    securityConfigError:
+      "Kontaktní formulář je dočasně nedostupný. Kontaktujte nás prosím e-mailem nebo telefonicky.",
+    securityCheckFailed:
+      "Bezpečnostní ověření se nezdařilo. Obnovte stránku a zkuste to znovu, případně nás kontaktujte e-mailem nebo telefonicky.",
     confirmationSubject: "Potvrzení Vaší zprávy — NATURCHEM",
     confirmationBody: (focus: string, leadId: string) =>
       [
@@ -54,6 +59,10 @@ const apiMessages = {
     fieldTooLong: "One of the fields is too long. Please shorten the text.",
     tooManyAttachments: "You can upload at most 5 attachments.",
     invalidAttachment: "Unsupported file type. Allowed: PDF, Word, Excel, image or ZIP.",
+    securityConfigError:
+      "The contact form is temporarily unavailable. Please contact us by email or phone.",
+    securityCheckFailed:
+      "The security check failed. Refresh the page and try again, or contact us by email or phone.",
     confirmationSubject: "Confirmation of your message — NATURCHEM",
     confirmationBody: (focus: string, leadId: string) =>
       [
@@ -81,6 +90,10 @@ const apiMessages = {
     fieldTooLong: "Ein Feld ist zu lang. Bitte kürzen Sie den Text.",
     tooManyAttachments: "Sie können höchstens 5 Anhänge hochladen.",
     invalidAttachment: "Nicht unterstützter Dateityp. Erlaubt: PDF, Word, Excel, Bild oder ZIP.",
+    securityConfigError:
+      "Das Kontaktformular ist vorübergehend nicht verfügbar. Bitte kontaktieren Sie uns per E-Mail oder Telefon.",
+    securityCheckFailed:
+      "Die Sicherheitsprüfung ist fehlgeschlagen. Laden Sie die Seite neu und versuchen Sie es erneut oder kontaktieren Sie uns per E-Mail oder Telefon.",
     confirmationSubject: "Bestätigung Ihrer Nachricht — NATURCHEM",
     confirmationBody: (focus: string, leadId: string) =>
       [
@@ -156,6 +169,33 @@ export async function POST(request: Request) {
 
     if (getString(formData, "website")) {
       return NextResponse.json({ ok: true, message: msg.success });
+    }
+
+    const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim();
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY?.trim();
+    if (Boolean(turnstileSiteKey) !== Boolean(turnstileSecret)) {
+      console.error("[CONTACT_FORM_TURNSTILE_CONFIG_ERROR]");
+      return NextResponse.json({ ok: false, message: msg.securityConfigError }, { status: 500 });
+    }
+
+    if (turnstileSiteKey && turnstileSecret) {
+      const verification = await verifyTurnstileToken({
+        token: getString(formData, "cf-turnstile-response"),
+        secret: turnstileSecret,
+        remoteIp: getClientIp(request),
+        expectedAction: "contact",
+        expectedHostname: new URL(request.url).hostname
+      });
+      if (!verification.success) {
+        console.warn(
+          "[CONTACT_FORM_TURNSTILE_REJECTED]",
+          verification.errorCodes.join(",") || "unknown"
+        );
+        return NextResponse.json(
+          { ok: false, message: msg.securityCheckFailed },
+          { status: 400 }
+        );
+      }
     }
 
     const name = getString(formData, "name");
