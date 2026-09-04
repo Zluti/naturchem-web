@@ -22,7 +22,7 @@ export const tabletLogoPreviewCount = 7;
 export const desktopLogoGridSlots = 20;
 export const desktopLogoPreviewCount = 19;
 
-export const clientLogosMoreLabel = "a mnoho dalších..";
+export const clientLogosMoreLabel = "Další zákazníci";
 export const clientLogosMoreAriaLabel = "Zobrazit další loga zákazníků";
 
 export function getLogoPreviewCount(viewportWidth: number): number {

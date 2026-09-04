@@ -44,10 +44,11 @@ function ClientLogoLink({ client }: { client: ClientLogo }) {
  */
 export function ClientLogosPreview({ locale, clients = referenceClients, moreHref }: Props) {
   const { moreLabel, moreAriaLabel } = getClientLogosLabels(locale);
+  const previewClients = clients.slice(0, 9);
 
   return (
     <div className="client-logos-grid client-logos-grid--responsive-preview">
-      {clients.map((client) => (
+      {previewClients.map((client) => (
         <ClientLogoLink key={client.name} client={client} />
       ))}
       <LocaleLink href={moreHref} className="client-logo-item client-logo-more" aria-label={moreAriaLabel}>

@@ -8,16 +8,16 @@ type ClientLogosLabels = {
 
 const labels: Record<Locale, ClientLogosLabels> = {
   cs: {
-    moreLabel: "a mnoho dalších..",
-    moreAriaLabel: "Zobrazit další loga zákazníků"
+    moreLabel: "Další zákazníci",
+    moreAriaLabel: "Zobrazit další zákazníky"
   },
   en: {
-    moreLabel: "and many more…",
-    moreAriaLabel: "Show more client logos"
+    moreLabel: "More clients",
+    moreAriaLabel: "Show more clients"
   },
   de: {
-    moreLabel: "und viele weitere…",
-    moreAriaLabel: "Weitere Kundenlogos anzeigen"
+    moreLabel: "Weitere Kunden",
+    moreAriaLabel: "Weitere Kunden anzeigen"
   }
 };
 

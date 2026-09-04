@@ -7,6 +7,7 @@ import { ClientLogosPreview } from "@/components/ClientLogosPreview";
 import { HomePoradnaStrip } from "@/components/HomePoradnaStrip";
 import { HomeDemandPaths } from "@/components/HomeDemandPaths";
 import { HomeTechnicalMotif } from "@/components/HomeTechnicalMotif";
+import { HomeProjectFlow } from "@/components/HomeProjectFlow";
 import { getCompanyStatsContent } from "@/lib/i18n/company-stats-i18n";
 import { getHomeHeroPillars } from "@/lib/i18n/content";
 import { getMessages } from "@/lib/i18n/get-messages";
@@ -80,6 +81,7 @@ export default async function Home({ params }: Props) {
           <ExperienceStats
             variant="compact"
             showNote={false}
+            animateValues
             statsContent={statsContent}
             experienceOverviewAria={messages.common.experienceOverview}
           />
@@ -87,6 +89,8 @@ export default async function Home({ params }: Props) {
       </section>
 
       <HomeDemandPaths locale={locale} />
+
+      <HomeProjectFlow locale={locale} />
 
       <section
         className="home-section home-section-offer home-fade-in-section home-fade-in-section-delay-2 home-below-fold"
@@ -107,6 +111,9 @@ export default async function Home({ params }: Props) {
       >
         <div className="container">
           <header className="section-header home-clients-header">
+            <p className="eyebrow">
+              {locale === "cs" ? "Reference" : locale === "de" ? "Referenzen" : "References"}
+            </p>
             <h2 id="home-clients-heading">{messages.home.clientsTitle}</h2>
           </header>
           <ClientLogosPreview locale={locale} moreHref={link("/reference#zakaznici")} />

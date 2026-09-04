@@ -1,9 +1,11 @@
+import { CountUpStatValue } from "@/components/CountUpStatValue";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import type { CompanyStatsContent } from "@/lib/i18n/company-stats-i18n";
 
 type Props = {
   showNote?: boolean;
   variant?: "default" | "compact";
+  animateValues?: boolean;
   statsContent: CompanyStatsContent;
   experienceOverviewAria: string;
 };
@@ -11,6 +13,7 @@ type Props = {
 export function ExperienceStats({
   showNote = true,
   variant = "default",
+  animateValues = false,
   statsContent,
   experienceOverviewAria
 }: Props) {
@@ -24,7 +27,11 @@ export function ExperienceStats({
           <article key={stat.label} className="stat-card stat-card-prominent stat-card-with-icon">
             <ServiceIcon icon={stat.icon} variant="card" className="stat-card-icon" />
             <div className="stat-card-body">
-              <span className="stat-value">{stat.value}</span>
+              {animateValues ? (
+                <CountUpStatValue value={stat.value} />
+              ) : (
+                <span className="stat-value">{stat.value}</span>
+              )}
               <span className="stat-label">{stat.label}</span>
             </div>
           </article>
