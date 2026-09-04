@@ -283,7 +283,15 @@ export async function POST(request: Request) {
     const rawRecipients = process.env.CONTACT_TO_EMAILS
       ? process.env.CONTACT_TO_EMAILS.split(/[,;]+/).map((r) => r.trim())
       : [company.email, company.emailSecondary];
-    const recipients = rawRecipients.filter((r) => r.includes("@"));
+    const recipients = rawRecipients.reduce<string[]>((unique, recipient) => {
+      if (
+        recipient.includes("@") &&
+        !unique.some((current) => current.toLowerCase() === recipient.toLowerCase())
+      ) {
+        unique.push(recipient);
+      }
+      return unique;
+    }, []);
 
     if (recipients.length === 0) {
       console.error("[CONTACT_FORM_NO_RECIPIENTS]");
@@ -319,19 +327,33 @@ export async function POST(request: Request) {
           }))
         : undefined;
 
-    const { data: delivery, error } = await resend.emails.send({
-      from: fromEmail,
-      to: recipients,
-      subject,
-      replyTo: email || undefined,
-      text: emailBody,
-      html: `<pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;">${escapeHtml(
-        emailBody
-      )}</pre>`,
-      attachments: attachmentPayload
-    });
+    // Send each internal copy independently. A suppression or provider failure for
+    // one address must not prevent a separately monitored backup from receiving it.
+    const deliveryAttempts = await Promise.all(
+      recipients.map(async (recipient) => {
+        try {
+          return await resend.emails.send({
+            from: fromEmail,
+            to: recipient,
+            subject,
+            replyTo: email || undefined,
+            text: emailBody,
+            html: `<pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;">${escapeHtml(
+              emailBody
+            )}</pre>`,
+            attachments: attachmentPayload
+          });
+        } catch (error) {
+          return { data: null, error };
+        }
+      })
+    );
+    const providerMessageIds = deliveryAttempts
+      .map(({ data }) => data?.id)
+      .filter((id): id is string => Boolean(id));
 
-    if (error || !delivery?.id) {
+    if (providerMessageIds.length === 0) {
+      const error = deliveryAttempts.find((attempt) => attempt.error)?.error;
       const errMsg =
         error && typeof error === "object" && "message" in error
           ? String((error as { message: string }).message)
@@ -351,11 +373,23 @@ export async function POST(request: Request) {
       );
     }
 
+    if (providerMessageIds.length < recipients.length) {
+      console.warn(
+        "[CONTACT_FORM_PARTIAL_ACCEPTANCE]",
+        JSON.stringify({
+          leadId,
+          acceptedRecipientCount: providerMessageIds.length,
+          recipientCount: recipients.length
+        })
+      );
+    }
+
     console.info(
       "[CONTACT_FORM_ACCEPTED]",
       JSON.stringify({
         leadId,
-        providerMessageId: delivery.id,
+        providerMessageIds,
+        acceptedRecipientCount: providerMessageIds.length,
         recipientCount: recipients.length
       })
     );
@@ -364,7 +398,10 @@ export async function POST(request: Request) {
       detailedService !== "neuvedeno" ? detailedService : inquiryCategory;
     const confirmationBody = msg.confirmationBody(confirmationFocus, leadId);
 
-    if (email) {
+    // Do not turn the form into an unprotected autoresponder. Without a verified
+    // Turnstile token, automated submissions must not receive mail from the
+    // NATURCHEM domain. The internal inquiry path remains unchanged.
+    if (email && turnstileSiteKey && turnstileSecret) {
       // The business inquiry has already been accepted. A slow or failed courtesy
       // email must not delay success or make the visitor submit the inquiry twice.
       try {

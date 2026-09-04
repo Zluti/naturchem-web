@@ -10,6 +10,8 @@ Honeypot a paměťový rate limit serverless funkce nezastavily opakované autom
 - Widget předá jednorázový token ve standardním poli `cf-turnstile-response`.
 - Server token vždy ověří přes Siteverify, vyžaduje akci `contact` i hostname aktuálního webu a při chybě neodesílá e-mail ani `generate_lead`.
 - Po neúspěšném odeslání se widget znovu vytvoří, protože token lze použít jen jednou.
+- Zdvořilostní potvrzení odesílateli se posílá pouze po úspěšném Turnstile ověření. Dokud ochrana není produkčně aktivní, interní oznámení se chová beze změny, ale formulář se nepoužívá jako nechráněný automatický odpovídač na adresy dodané robotem.
+- Každý interní příjemce dostane samostatný požadavek na odeslání. Selhání nebo suppression hlavní adresy tak nezablokuje nezávislou záložní adresu; úspěch API stačí pouze tehdy, když poskytovatel přijme alespoň jednu interní kopii. Samotné přijetí stále není důkaz následného doručení.
 - Bez JavaScriptu se zobrazí přímý e-mail a telefon; formulář bez ověření se neodešle, pokud je ochrana produkčně aktivní.
 - Aktivace je podmíněná současným nastavením `NEXT_PUBLIC_TURNSTILE_SITE_KEY` a `TURNSTILE_SECRET_KEY`. Bez obou klíčů se chování webu nemění.
 
@@ -33,6 +35,14 @@ Honeypot a paměťový rate limit serverless funkce nezastavily opakované autom
 - odstranit hlavní adresu ze suppression listu až po potvrzení příčiny complaintu;
 - vytvořit Turnstile widget a uložit oba klíče pouze do produkčních Vercel Environment Variables;
 - přidat případné preview/local hostnames jen pro samostatné testovací klíče, ne do produkčního widgetu.
+
+## Stav 4. 9. 2026
+
+- Turnstile kód je na produkci, ale oba produkční klíče stále chybějí a widget se nezobrazuje.
+- Resend nadále potlačuje interní oznámení pro `naturchem@naturchem.cz`; nové automatické zprávy současně dostávají doručené potvrzení na adresu odesílatele.
+- Třicetidenní historie Resendu neobsahuje zprávu na `hezina@naturchem.cz`, `zilkova@naturchem.cz` ani veřejnou katalogovou adresu, takže jejich skutečné přijetí nelze odvodit jen z existence schránky. Dřívější víceadresátové souhrny na připojený Gmail byly doručené, ale po complaintu hlavního příjemce jsou nové společné zprávy označené jako `Suppressed`; to potvrzuje potřebu samostatného odeslání každému příjemci.
+- Pojistka proti nechráněnému autoresponderu a nezávislé odesílání každému internímu příjemci jsou commitnuté pouze lokálně na větvi `codex/fix-inquiry-delivery-2026-09-04`. Kompletní `npm run verify` prošlo: lint bez chyb se 16 existujícími upozorněními, TypeScript, všechny automatické kontroly a produkční build 559 výstupů. Větev není pushnutá a změna není nasazená.
+- K bezpečné produkční nápravě stále chybí potvrzený záložní příjemce, přihlášení do Cloudflare pro vytvoření Turnstile widgetu, odstranění suppression až po aktivaci ochrany a jeden kontrolovaný end-to-end test.
 
 ## Primární zdroje
 

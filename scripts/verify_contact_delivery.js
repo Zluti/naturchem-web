@@ -99,12 +99,30 @@ async function main() {
     assert.ok(fixture.emails[0].text.includes(`ID poptávky: ${body.leadId}`));
     assert.ok(fixture.emails[0].subject.includes(body.leadId.slice(0, 8)));
     assert.ok(fixture.emails[0].text.includes("IPPC a integrovaná povolení"));
-    assert.equal(fixture.emails.length, 1, "Response does not wait for the courtesy email");
-    assert.equal(fixture.afterResponse.length, 1);
-    await fixture.afterResponse[0]();
-    assert.equal(fixture.emails.length, 2);
-    assert.ok(fixture.emails[1].text.includes(body.leadId));
+    assert.equal(fixture.emails.length, 1);
+    assert.equal(
+      fixture.afterResponse.length,
+      0,
+      "Unprotected submissions must not turn the form into an autoresponder"
+    );
   }
+
+  process.env.CONTACT_TO_EMAILS = "office@example.invalid,backup@example.invalid,OFFICE@example.invalid";
+  const independentRecipients = api({
+    send: (_, count) =>
+      count === 1
+        ? { data: null, error: { name: "synthetic-primary-failure" } }
+        : { data: { id: "accepted-backup-id" }, error: null }
+  });
+  const independentResult = await independentRecipients.submit(data());
+  assert.equal(independentResult.status, 200);
+  assert.ok((await independentResult.json()).leadId);
+  assert.equal(independentRecipients.emails.length, 2, "Each unique internal recipient gets an independent request");
+  assert.deepEqual(
+    independentRecipients.emails.map((message) => message.to),
+    ["office@example.invalid", "backup@example.invalid"]
+  );
+  process.env.CONTACT_TO_EMAILS = "office@example.invalid";
 
   process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = "test-site-key";
   delete process.env.TURNSTILE_SECRET_KEY;
@@ -125,11 +143,16 @@ async function main() {
     return Response.json({ success: true, action: "contact", hostname: "example.invalid" });
   };
   const protectedTurnstile = api();
-  assert.equal(
-    (await protectedTurnstile.submit(data({ "cf-turnstile-response": "valid-test-token" }))).status,
-    200
+  const protectedResult = await protectedTurnstile.submit(
+    data({ "cf-turnstile-response": "valid-test-token" })
   );
+  assert.equal(protectedResult.status, 200);
+  const protectedBody = await protectedResult.json();
   assert.equal(protectedTurnstile.emails.length, 1);
+  assert.equal(protectedTurnstile.afterResponse.length, 1);
+  await protectedTurnstile.afterResponse[0]();
+  assert.equal(protectedTurnstile.emails.length, 2);
+  assert.ok(protectedTurnstile.emails[1].text.includes(protectedBody.leadId));
 
   global.fetch = async () =>
     Response.json({ success: true, action: "different-form", hostname: "example.invalid" });
@@ -158,9 +181,8 @@ async function main() {
   );
   assert.equal(invalidTurnstile.emails.length, 0);
 
-  delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-  delete process.env.TURNSTILE_SECRET_KEY;
-  global.fetch = async () => { throw new Error("Network access is forbidden in this test"); };
+  global.fetch = async () =>
+    Response.json({ success: true, action: "contact", hostname: "example.invalid" });
   for (const send of [
     (_, count) => count === 2
       ? { data: null, error: { name: "synthetic" } }
@@ -168,13 +190,19 @@ async function main() {
     (_, count) => { if (count === 2) throw new Error("Synthetic confirmation failure"); return { data: { id: "accepted-primary-id" }, error: null }; }
   ]) {
     const fixture = api({ send });
-    const result = await fixture.submit(data());
+    const result = await fixture.submit(data({ "cf-turnstile-response": "valid-test-token" }));
     assert.equal(result.status, 200);
     assert.ok((await result.json()).leadId);
     await fixture.afterResponse[0](); // No uncaught exception; accepted inquiry is preserved.
   }
   const scheduling = api({ scheduleThrows: true });
-  assert.equal((await scheduling.submit(data())).status, 200);
+  assert.equal(
+    (await scheduling.submit(data({ "cf-turnstile-response": "valid-test-token" }))).status,
+    200
+  );
+  delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  delete process.env.TURNSTILE_SECRET_KEY;
+  global.fetch = async () => { throw new Error("Network access is forbidden in this test"); };
   for (const send of [
     () => ({ data: null, error: { name: "synthetic" } }),
     () => ({ data: null, error: null }),
